@@ -6,16 +6,34 @@ import java.util.List;
 public class Creature {
 
     int id;
-
-    String creatureTypes;
+    int idEquipa;
+    String imagePNG;
+    String creatureType;
+    int nrPontos;
+    String orientacao;
     List<Ponto> coordenadas= new ArrayList();
 
 
     Creature(){}
 
-    Creature( int id, String tipo){
+    Creature( int id, String creatureType){
         this.id=id;
-        this.creatureTypes=creatureTypes;
+        this.creatureType=creatureType;
     }
 
+    public int getId(){
+        return id;
+    }
+
+    public String getImagePNG(){
+        return imagePNG;
+    }
+
+    public String toString(){
+        return (id + " | " + creatureType + " | " + idEquipa + " | " + nrPontos + " | @ " + coordenadas + " | " +
+                orientacao);
+    }
+“<ID> | <Tipo> | <ID Equipa> |
+<Nr Pontos> @ (<x>, <y>)
+<Orientacão>”
 }

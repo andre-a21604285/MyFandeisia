@@ -25,7 +25,10 @@ public class FandeisiaGameManager {
         return (authors);
     }
 
-    public void getResults(){
+    public String[][] getCreatureTypes(){
+
+
+       return creatureTypes;
     }
 
 
