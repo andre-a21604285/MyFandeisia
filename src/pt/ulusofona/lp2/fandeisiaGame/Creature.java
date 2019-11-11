@@ -8,21 +8,34 @@ public class Creature {
     int id;
     int idEquipa;
     String imagePNG;
-    String creatureType;
+    String tipo;
+    String descricao;
     int nrPontos;
+    int custo;
     String orientacao;
     List<Ponto> coordenadas= new ArrayList();
 
 
     Creature(){}
 
-    Creature( int id, String creatureType){
+    Creature( int id, String creatureType, String descricao, int custo){
         this.id=id;
-        this.creatureType=creatureType;
+        this.tipo=tipo;
+        this.descricao = descricao;
+        this.custo = custo;
     }
 
     public int getId(){
         return id;
+    }
+
+    public int getCusto(){
+        return custo;
+    }
+
+
+    public String getdescricao(){
+        return descricao;
     }
 
     public String getImagePNG(){
@@ -30,10 +43,8 @@ public class Creature {
     }
 
     public String toString(){
-        return (id + " | " + creatureType + " | " + idEquipa + " | " + nrPontos + " | @ " + coordenadas + " | " +
+        return (id + " | " + tipo + " | " + idEquipa + " | " + nrPontos + " | @ " + coordenadas + " | " +
                 orientacao);
     }
-“<ID> | <Tipo> | <ID Equipa> |
-<Nr Pontos> @ (<x>, <y>)
-<Orientacão>”
+
 }
