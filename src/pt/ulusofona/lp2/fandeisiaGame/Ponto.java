@@ -28,4 +28,5 @@ public class Ponto {
     public int setY(int y){
         return y;
     }
+
 }
