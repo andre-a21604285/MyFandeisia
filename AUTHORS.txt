@@ -1,2 +1,2 @@
-André Rego ; 21604285
-Gonçalo Matos ; 21600767
+André Rego;21604285
+Gonçalo Matos;21600767
