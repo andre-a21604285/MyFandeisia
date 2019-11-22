@@ -1,7 +1,7 @@
 package pt.ulusofona.lp2.fandeisiaGame;
 import java.util.*;
 import java.lang.*;
-import java.io.*;
+
 
 
 import java.util.ArrayList;
@@ -28,12 +28,19 @@ public class FandeisiaGameManager {
     List<String> results = new ArrayList<String>();
 
 
+
+
+
+
+
+
     private boolean jogoADecorrer;
 
 
     public FandeisiaGameManager() {
 
         jogoADecorrer = true;
+
 
     }
 
