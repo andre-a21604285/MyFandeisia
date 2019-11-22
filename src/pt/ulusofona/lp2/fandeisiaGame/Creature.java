@@ -12,8 +12,10 @@ public class Creature {
     String descricao;
     int nrPontos;
     int custo;
-    String orientacao;
-    Ponto coordenadas = new Ponto();
+    String orientacao = "Norte";
+    int x;
+    int y;
+
 
 
     Creature(){}
@@ -25,8 +27,7 @@ public class Creature {
         this.custo = custo;
         this.id = id;
         this.idEquipa = idEquipa;
-        coordenadas.x=1;
-        coordenadas.y=1;
+
     }
 
 
@@ -39,14 +40,41 @@ public class Creature {
     public int getCusto(){
         return custo;
     }
+    public int getNrPontos(){
+        return nrPontos;
+    }
+
     public int getX(){
-        return coordenadas.x;
+        return x;
     }
     public int getY(){
-        return coordenadas.y;
+        return y;
+    }
+    public void setMaisY(){
+        y++;
+    }
+    public void setMenosY(){
+        y--;
+    }
+    public void setMaisX(){x++;}
+    public void setMenosX(){x--;}
+
+    public String getCoordenadas(){
+        String pontos;
+        pontos = ("("+getX()+","+getY()+")");
+        return pontos;
     }
     public String getOrientacao(){
         return orientacao;
+    }
+
+
+
+    public void setOrientacao(String orientacao){
+
+        this.orientacao = orientacao;
+
+
     }
 
 
@@ -64,8 +92,8 @@ public class Creature {
     }
 
     public String toString(){
-        return (id + " | " + tipo + " | " + idEquipa + " | " + nrPontos + " | @ " + coordenadas + " | " +
-                orientacao);
+        return (id + " | " + tipo + " | " + idEquipa + " | " + nrPontos + " | @ " + x + " | " +
+                y);
     }
 
 }

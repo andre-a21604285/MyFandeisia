@@ -3,15 +3,16 @@ package pt.ulusofona.lp2.fandeisiaGame;
 public class Tresure{
 
     int id;
+    int x;
+    int y;
     static final String tipo = "tresure";
-    Ponto coordenadas = new Ponto();
+
 
     Tresure(){}
 
     Tresure( int id){
         this.id = id;
-        coordenadas.x=2;
-        coordenadas.y=2;
+
     }
 
     public int getId(){
@@ -20,10 +21,10 @@ public class Tresure{
 
 
     public int getX(){
-        return coordenadas.x;
+        return x;
     }
     public int getY(){
-        return coordenadas.y;
+        return y;
     }
 
 }
