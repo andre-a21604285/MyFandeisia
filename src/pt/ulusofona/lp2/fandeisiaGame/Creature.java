@@ -1,9 +1,10 @@
 package pt.ulusofona.lp2.fandeisiaGame;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class Creature {
+public abstract class Creature {
 
     int id;
     int idEquipa;
@@ -11,89 +12,58 @@ public class Creature {
     String tipo;
     String descricao;
     int nrPontos;
-    int custo;
-    String orientacao = "Norte";
+    String orientacao;
     int x;
     int y;
-
-
+    int ouro;
+    int prata;
+    int bronze;
+    protected List<String> normalOrientation = Arrays.asList ("Norte","Este","Sul","Oeste");
+    protected List<String> unnormalOrientation = Arrays.asList("Norte","Nordeste","Este","Sudeste","Sul","Sudoeste","Oeste","Noroeste");
 
     Creature(){}
 
-    Creature( int id, int idEquipa, String tipo, String imagePNG, String descricao, int custo, String orientacao){
+    Creature( int id, int idEquipa, String tipo, String imagePNG, String descricao, String orientacao){
+        this.nrPontos = 0;
+        this.ouro = 0;
+        this.prata = 0;
+        this.bronze = 0;
         this.tipo=tipo;
         this.imagePNG=imagePNG;
         this.descricao = descricao;
-        this.custo = custo;
         this.id = id;
         this.idEquipa = idEquipa;
+    }
+    public int getId(){return id;}
+    public int getIdEquipa(){return idEquipa;}
+    public int getNrPontos(){return nrPontos;}
+    public int getX(){return x;}
+    public int getY(){return y; }
+    public int getOuro(){return ouro; }
+    public int getPrata(){return prata; }
+    public int getBronze(){return bronze; }
+    public String getOrientation(){return orientacao;}
+    public String getdescricao(){return descricao;}
+    public String getTipo(){return tipo;}
+    public String getImagePNG(){return imagePNG;}
 
+    public void setNrPontos(int pontos){
+        this.nrPontos+=pontos;
+    }
+
+    public void setOuro(){
+        this.ouro++;
+    }
+    public void setPrata(){
+        this.prata++;
+    }
+    public void setBronze(){
+        this.bronze++;
     }
 
 
-    public int getId(){
-        return id;
-    }
-    public int getIdEquipa(){
-        return idEquipa;
-    }
-    public int getCusto(){
-        return custo;
-    }
-    public int getNrPontos(){
-        return nrPontos;
-    }
-
-    public int getX(){
-        return x;
-    }
-    public int getY(){
-        return y;
-    }
-    public void setMaisY(){
-        y++;
-    }
-    public void setMenosY(){
-        y--;
-    }
-    public void setMaisX(){x++;}
-    public void setMenosX(){x--;}
-
-    public String getCoordenadas(){
-        String pontos;
-        pontos = ("("+getX()+","+getY()+")");
-        return pontos;
-    }
-    public String getOrientacao(){
-        return orientacao;
-    }
-
-
-
-    public void setOrientacao(String orientacao){
-
-        this.orientacao = orientacao;
-
-
-    }
-
-
-
-    public String getdescricao(){
-        return descricao;
-    }
-
-    public String getTipo(){
-        return tipo;
-    }
-
-    public String getImagePNG(){
-        return imagePNG;
-    }
-
-    public String toString(){
-        return (id + " | " + tipo + " | " + idEquipa + " | " + nrPontos + " | @ " + x + " | " +
-                y);
-    }
-
+    public String toString(){return (id + " | " + tipo + " | " + idEquipa + " | " + nrPontos + " | @ " + x + " | " +
+                y);}
+    public abstract void movimento();
+    public abstract void setOrientation();
 }
