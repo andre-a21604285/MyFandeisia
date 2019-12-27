@@ -12,18 +12,16 @@ public class FandeisiaGameManager {
     int turn = 0;
     int linhas;
     int colunas;
-    int pontosLDR = 0;
-    int pontosRes = 0;
     private boolean jogoADecorrer;
     String[] criaturas = new String[1000]; // variavel necessária para getResults()
-    List<Tresure> tresure = new ArrayList();
     List<String> results = new ArrayList<String>();
     Equipa user;
     Equipa computer;
     Equipa corrente;
     Equipa vencedor;
     List<Creature> world;
-
+    List<Tresure> tresure = new ArrayList();
+    List<Buraco> holes = new ArrayList();
 
     public FandeisiaGameManager() {
         user = new Equipa(10);
@@ -196,9 +194,14 @@ public class FandeisiaGameManager {
     }
     public int getElementId(int x, int y) {
         int elementId = 0;
-        for (i = 0; i < world.size(); i++) {
+        int all=world.size()+tresure.size()+holes.size();
+        for (i = 0; i < all; i++) {
             if (world.get(i).getX() == x && world.get(i).getY() == y) {
                 elementId = world.get(i).getId();
+            } else if(tresure.get(i).getX() == x && tresure.get(i).getY() == y){
+                elementId = tresure.get(i).getId();
+            }else if(holes.get(i).getX() == x && holes.get(i).getY() == y){
+                elementId = holes.get(i).getId();
             }
         }
         return elementId;
@@ -209,26 +212,29 @@ public class FandeisiaGameManager {
 
     public int getCurrentScore(int teamID) {
 
-        if (teamID == 0) {
-            return pontosLDR;
+        if (teamID == 10) {
+            return user.getPontos();
         } else {
-            return pontosRes;
+            return computer.getPontos();
         }
     }
-    public void setCurrentScore(int teamID) {
-        for (i = 0; i < world.size(); i++) {
-            if (world.get(i).getIdEquipa() == 0) {
-                pontosLDR += world.get(i).getNrPontos();
-            } else {
-                pontosRes += world.get(i).getNrPontos();
-            }
+    public int getCoinTotal(int teamID){
+        if (teamID == 10) {
+            return user.getMoedas();
+        } else {
+            return computer.getMoedas();
         }
     }
+
     public List<String> getAuthors() {
         ArrayList<String> authors = new ArrayList<String>();
         authors.add("    André Rego  - 21604285  ");
         authors.add("   Gonçalo Matos  - 21600767  ");
         return authors;
+    }
+    public String whoIsLordEder(){
+        String lord="Ederzito Antonio Macedo Lopes";
+        return lord;
     }
     public List<String> getResults() {return results;}
 
