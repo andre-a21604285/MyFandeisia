@@ -22,38 +22,13 @@ public class FandeisiaGameManager {
     List<Creature> world;
     List<Tresure> tresure = new ArrayList();
     List<Buraco> holes = new ArrayList();
+    Map<String,List<Creature>> feiticosTurno;
 
     public FandeisiaGameManager() {
         user = new Equipa(10);
         computer = new Equipa(20);
         jogoADecorrer = true;
-    }
-
-    public void setResults() {
-        String resultado;
-        String creatures;
-        if(vencedor==null){
-            resultado="\n Welcome to FANDEISIA \n Resultado: EMPATE \n LRD: " + user.getPontos() + "\n RESISTENCIA: "
-                    + computer.getPontos() + "\n Nr. de Turnos jogados: " + turn +"\n----------\n";
-        }else{
-            String vencedor = "RESISTENCIA";
-            String derrotado = "LRD";
-            Equipa derr = user;
-            if(this.vencedor.getId()==10){
-                vencedor = "LRD";
-                derrotado = "RESISTENCIA";
-                derr = computer;
-            }
-            resultado="\n Welcome to FANDEISIA \n Resultado: Vitoria da Equipa \n " + vencedor + "\n"
-                    + vencedor + " : " + this.vencedor.getPontos() + "\n" + derrotado + " : " + derr.getPontos() +
-                    "\n Nr. de Turnos jogados: " + turn +"\n----------\n";
-        }
-        results.add(resultado);
-        for(Creature creature:world){
-            creatures= creature.getId() + " : " + creature.getTipo() +" : "+creature.getOuro()+" : "+creature.getPrata()+" : "+creature.getBronze()+" : "
-                    +creature.getNrPontos();
-            results.add(creatures);
-        }
+        feiticosTurno = new HashMap<>();
     }
 
     public int startGame(String[] content, int rows, int columns) {
@@ -91,6 +66,7 @@ public class FandeisiaGameManager {
         colunas = columns;
         return validation();
     }
+
     public void setInitialTeam(int teamId) {
         if(teamId == 10){
             corrente = user;
@@ -98,6 +74,7 @@ public class FandeisiaGameManager {
             corrente = computer;
         }
     }
+
     public void processTurn() {
         //Movimentar criaturas
         if(corrente.getId() == 10)
@@ -106,23 +83,13 @@ public class FandeisiaGameManager {
             corrente=user;
         turn++;
     }
+
     public List<Creature> getCreatures() {
         world =user.getCreatures();
         world.addAll(computer.getCreatures());//addAll = adiciona uma colecao á lista
         return world;
     }
-    public boolean pointsWorld() {
-        int point = 0;
-        count = 0;
-        while (count < world.size()) {
-            point = world.get(count).getNrPontos();
-            count++;
-        }
-        if (point > (tresure.size() / 2)) {
-            return true;
-        }
-        return false;
-    }
+
     public String[][] getCreatureTypes() {
         String[][] creatureTypes = new String[5][4];
         creatureTypes[0][0] = Anao.tipo;
@@ -152,46 +119,63 @@ public class FandeisiaGameManager {
         return creatureTypes;
     }
     public String[][] getSpellTypes() {
-        String[][] spellTypes = new String[8][3];
-        spellTypes[0][0] = Feitico.EmpurraParaNorte()[0];
-        spellTypes[0][1] = Feitico.EmpurraParaNorte()[1];
-        spellTypes[0][2] = Feitico.EmpurraParaNorte()[2];
+        String[][] spellTypes = new String[9][3];
+        spellTypes[0][0] = Feitico.empurraParaNorte()[0];
+        spellTypes[0][1] = Feitico.empurraParaNorte()[1];
+        spellTypes[0][2] = Feitico.empurraParaNorte()[2];
 
-        spellTypes[1][0] = Feitico.EmpurraParaSul()[0];
-        spellTypes[1][1] = Feitico.EmpurraParaSul()[1];
-        spellTypes[1][2] = Feitico.EmpurraParaSul()[2];
+        spellTypes[1][0] = Feitico.empurraParaSul()[0];
+        spellTypes[1][1] = Feitico.empurraParaSul()[1];
+        spellTypes[1][2] = Feitico.empurraParaSul()[2];
 
-        spellTypes[2][0] = Feitico.EmpurraParaEste()[0];
-        spellTypes[2][1] = Feitico.EmpurraParaEste()[1];
-        spellTypes[2][2] = Feitico.EmpurraParaEste()[2];
+        spellTypes[2][0] = Feitico.empurraParaEste()[0];
+        spellTypes[2][1] = Feitico.empurraParaEste()[1];
+        spellTypes[2][2] = Feitico.empurraParaEste()[2];
 
-        spellTypes[3][0] = Feitico.ReduzAlcance()[0];
-        spellTypes[3][1] = Feitico.ReduzAlcance()[1];
-        spellTypes[3][2] = Feitico.ReduzAlcance()[2];
+        spellTypes[3][0] = Feitico.empurraParaOeste()[0];
+        spellTypes[3][1] = Feitico.empurraParaOeste()[1];
+        spellTypes[3][2] = Feitico.empurraParaOeste()[2];
 
-        spellTypes[4][0] = Feitico.DuplicaAlcance()[0];
-        spellTypes[4][1] = Feitico.DuplicaAlcance()[1];
-        spellTypes[4][2] = Feitico.DuplicaAlcance()[2];
+        spellTypes[4][0] = Feitico.reduzAlcance()[0];
+        spellTypes[4][1] = Feitico.reduzAlcance()[1];
+        spellTypes[4][2] = Feitico.reduzAlcance()[2];
 
-        spellTypes[5][0] = Feitico.Congela()[0];
-        spellTypes[5][1] = Feitico.Congela()[1];
-        spellTypes[5][2] = Feitico.Congela()[2];
+        spellTypes[5][0] = Feitico.duplicaAlcance()[0];
+        spellTypes[5][1] = Feitico.duplicaAlcance()[1];
+        spellTypes[5][2] = Feitico.duplicaAlcance()[2];
 
-        spellTypes[6][0] = Feitico.Congela4Ever()[0];
-        spellTypes[6][1] = Feitico.Congela4Ever()[1];
-        spellTypes[6][2] = Feitico.Congela4Ever()[2];
+        spellTypes[6][0] = Feitico.congela()[0];
+        spellTypes[6][1] = Feitico.congela()[1];
+        spellTypes[6][2] = Feitico.congela()[2];
 
-        spellTypes[7][0] = Feitico.Descongela()[0];
-        spellTypes[7][1] = Feitico.Descongela()[1];
-        spellTypes[7][2] = Feitico.Descongela()[2];
+        spellTypes[7][0] = Feitico.congela4Ever()[0];
+        spellTypes[7][1] = Feitico.congela4Ever()[1];
+        spellTypes[7][2] = Feitico.congela4Ever()[2];
+
+        spellTypes[8][0] = Feitico.descongela()[0];
+        spellTypes[8][1] = Feitico.descongela()[1];
+        spellTypes[8][2] = Feitico.descongela()[2];
         return spellTypes;
     }
+
     public boolean gameIsOver() {
         if (turn == 15 || tresure.isEmpty() || pointsWorld() == true ) {
             return true;
-        }else{
-            return false;}
+        }
+            return false;
     }
+
+    public boolean enchant(int x, int y, String spellName){ //vamos fazer um arraybidimensional
+        //adicionar ao mapa "feiticosTurno" um novo
+        Feitico feitico = new Feitico(spellName);
+        feitico.getFeitico(x,y,spellName);
+
+    }
+
+    public String getSpell(int x, int y){ //verificar no mapa de feiticos qual a criatura afetada
+
+    }
+
     public int getElementId(int x, int y) {
         int elementId = 0;
         int all=world.size()+tresure.size()+holes.size();
@@ -206,6 +190,7 @@ public class FandeisiaGameManager {
         }
         return elementId;
     }
+
     public int getCurrentTeamId() {
         return corrente.getId();
     }
@@ -218,6 +203,7 @@ public class FandeisiaGameManager {
             return computer.getPontos();
         }
     }
+
     public int getCoinTotal(int teamID){
         if (teamID == 10) {
             return user.getMoedas();
@@ -232,12 +218,42 @@ public class FandeisiaGameManager {
         authors.add("   Gonçalo Matos  - 21600767  ");
         return authors;
     }
+
     public String whoIsLordEder(){
         String lord="Ederzito Antonio Macedo Lopes";
         return lord;
     }
+
     public List<String> getResults() {return results;}
 
+    public void setResults() {
+        String resultado;
+        String creatures;
+        if(vencedor==null){
+            resultado="\n Welcome to FANDEISIA \n Resultado: EMPATE \n LRD: " + user.getPontos() + "\n RESISTENCIA: "
+                    + computer.getPontos() + "\n Nr. de Turnos jogados: " + turn +"\n----------\n";
+        }else{
+            String vencedor = "RESISTENCIA";
+            String derrotado = "LRD";
+            Equipa derr = user;
+            if(this.vencedor.getId()==10){
+                vencedor = "LRD";
+                derrotado = "RESISTENCIA";
+                derr = computer;
+            }
+            resultado="\n Welcome to FANDEISIA \n Resultado: Vitoria da Equipa \n " + vencedor + "\n"
+                    + vencedor + " : " + this.vencedor.getPontos() + "\n" + derrotado + " : " + derr.getPontos() +
+                    "\n Nr. de Turnos jogados: " + turn +"\n----------\n";
+        }
+        results.add(resultado);
+        for(Creature creature:world){
+            creatures= creature.getId() + " : " + creature.getTipo() +" : "+creature.getOuro()+" : "+creature.getPrata()+" : "+creature.getBronze()+" : "
+                    +creature.getNrPontos();
+            results.add(creatures);
+        }
+    }
+
+    // - Metodos privados - //
     private int validation(){
         int valor;
         if(user.getMoedas()<0 && computer.getMoedas()<0){
@@ -251,5 +267,17 @@ public class FandeisiaGameManager {
         }
         return valor;
     }
+
+    private boolean pointsWorld(){
+        int sum=0;
+        for(Tresure tresure : tresure){
+            sum+=tresure.getPoints();//soma os valores de pontos totais no board na variavel sum
+        }
+        if(user.getPontos() >sum/2 || computer.getPontos() > sum/2){
+            return true;
+        }
+        return false;
+    }
+
 
 }

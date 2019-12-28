@@ -34,6 +34,7 @@ public abstract class Creature {
         this.id = id;
         this.idEquipa = idEquipa;
     }
+
     public int getId(){return id;}
     public int getIdEquipa(){return idEquipa;}
     public int getNrPontos(){return nrPontos;}
