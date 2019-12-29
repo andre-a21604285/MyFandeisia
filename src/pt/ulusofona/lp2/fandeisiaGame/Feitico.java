@@ -13,27 +13,27 @@ public class Feitico {
         this.efeito=efeito;
     }
 
-    public int getFeitico(int x, int y, String name){
+    public void getFeitico(Creature creature, String name){
         if(name.equals("empurraParaNorte")){
-            return paraNorte(x,y);
+            paraNorte(creature);
         }else if(name.equals("empurraParaSul")){
-            return paraSul(x,y);
+             paraSul(creature);
         }else if(name.equals("empurraParaEste")){
-            return paraEste(x,y);
+             paraEste(creature);
         }else if(name.equals("empurraParaOeste")){
-            return paraOeste(x,y);
+             paraOeste(creature);
         }else if(name.equals("reduzAlcance")){
-            return menosAlcance(x,y);
+             menosAlcance(creature);
         }else if(name.equals("duplicaAlcance")){
-            return maisAlcance(x,y);
+             maisAlcance(creature);
         }else if(name.equals("congela")){
-            return gelo(x,y);
+             gelo(creature);
         }else if(name.equals("congela4Ever")){
-            return sempreGelo(x,y);
+             sempreGelo(creature);
         }else if(name.equals("descongela")){
-            return semGelo(x,y);
+             semGelo(creature);
         }
-        return 0;
+
     }
 
     public static String[] empurraParaNorte(){
@@ -111,34 +111,36 @@ public class Feitico {
 
 
 
-    private int paraNorte( int x, int y){
-        return y+1;
+    private void paraNorte( Creature creature){
+        creature.setY(creature.getY()+1);
     }
-    private int paraSul( int x, int y){
-        return y-1;
+    private void paraSul(Creature creature){
+        creature.setY(creature.getY()+1);
     }
-    private int paraEste( int x, int y){
-        return x+1;
+    private void paraEste( Creature creature){
+        creature.setY(creature.getX()+1);;
     }
-    private int paraOeste( int x, int y){return x-1;}
-    private int menosAlcance( int x, int y){//reduzir o movimento
-        return ;
+    private void paraOeste( Creature creature){
+        creature.setY(creature.getX()-1);
     }
-
-    private int maisAlcance( int x, int y){//reduzir o movimento
-        return ;
+    private void menosAlcance( Creature creature){//reduzir o movimento
+       creature.setAlcance(Math.min(creature.getMovement(),1));
     }
 
-    private int gelo( int x, int y){ // congelar
-        return ;
+    private void maisAlcance( Creature creature){//aumenta o movimento
+        creature.setAlcance(2*creature.getMovement());
     }
 
-    private int sempreGelo( int x, int y){ // congelar o resto do jogo
-        return ;
+    private void gelo( Creature creature){ // congelar
+        creature.setAlcance(0);
     }
 
-    private int semGelo( int x, int y){ // descongelar
-        return ;
+    private void sempreGelo( Creature creature){ // congelar o resto do jogo
+        creature.setAlcance(0);
+    }
+
+    private void semGelo( Creature creature){ // descongelar
+        creature.setAlcanceToNormal();
     }
 
 }

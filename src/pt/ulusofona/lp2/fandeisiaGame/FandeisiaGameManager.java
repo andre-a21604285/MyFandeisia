@@ -22,13 +22,15 @@ public class FandeisiaGameManager {
     List<Creature> world;
     List<Tresure> tresure = new ArrayList();
     List<Buraco> holes = new ArrayList();
-    Map<String,List<Creature>> feiticosTurno;
+    Map<String,Creature> feiticosTurno;
+    List<Creature> congelados;
 
     public FandeisiaGameManager() {
         user = new Equipa(10);
         computer = new Equipa(20);
         jogoADecorrer = true;
         feiticosTurno = new HashMap<>();
+        congelados = new ArrayList();
     }
 
     public int startGame(String[] content, int rows, int columns) {
@@ -82,6 +84,7 @@ public class FandeisiaGameManager {
         else
             corrente=user;
         turn++;
+        tiraGelo();
     }
 
     public List<Creature> getCreatures() {
@@ -166,14 +169,32 @@ public class FandeisiaGameManager {
     }
 
     public boolean enchant(int x, int y, String spellName){ //vamos fazer um arraybidimensional
-        //adicionar ao mapa "feiticosTurno" um novo
-        Feitico feitico = new Feitico(spellName);
-        feitico.getFeitico(x,y,spellName);
 
+        Feitico feitico = new Feitico(spellName);
+        Creature creature = getCreatureByPosition(x, y);
+        if(creature==null){
+            return false;
+        }else if(caiuEmBuraco(spellName,creature)){
+            return false;
+        }
+        feitico.getFeitico(creature,spellName);
+        feiticosTurno.put(spellName,creature);
+        if(spellName.equals("congela")){
+            congelados.add(creature);
+        }
+        return true;
     }
 
-    public String getSpell(int x, int y){ //verificar no mapa de feiticos qual a criatura afetada
-
+    public String getSpell(int x, int y) { //verificar no mapa de feiticos qual a criatura afetada
+        String spellName="";
+        for (Map.Entry<String, Creature> entry : feiticosTurno.entrySet()) {
+            Creature v = entry.getValue();
+            if(v.getX() == x && v.getY()==y ){
+                spellName = entry.getKey();
+                break;
+            }
+        }
+        return spellName;
     }
 
     public int getElementId(int x, int y) {
@@ -279,5 +300,57 @@ public class FandeisiaGameManager {
         return false;
     }
 
+    private Creature getCreatureByPosition(int x, int y){
+        int i;
+        Creature creature=null;
+        for(i=0; i<world.size();i++){
+            if(world.get(i).getX()==x && world.get(i).getY()==y){
+                creature=world.get(i);
+                break;
+            }
+        }
+        return creature;
+    }
+    private boolean hasBuraco(int x, int y){
+        int i;
+        boolean found=false;
+        for(i=0; i<holes.size();i++){
+            if(holes.get(i).getX()==x && world.get(i).getY()==y){
+                found=true;
+                break;
+            }
+        }
+        return found;
+    }
+
+    private boolean caiuEmBuraco(String name,Creature creature){
+        boolean found = false;
+        switch (name){
+            case "empurraParaNorte":
+                hasBuraco(creature.getX(),creature.getY()+1);
+                found=true;
+                break;
+            case "empurraParaSul":
+                hasBuraco(creature.getX(),creature.getY()-1);
+                found=true;
+                break;
+            case "empurraParaEste":
+                hasBuraco(creature.getX()+1,creature.getY());
+                found=true;
+                break;
+            case "empurraParaOeste":
+                hasBuraco(creature.getX()-1,creature.getY()+1);
+                found = true;
+                break;
+        }
+        return found;
+    }
+    private void tiraGelo(){
+        for(int i=0; i<congelados.size();i++){
+            congelados.get(i).setAlcanceToNormal();
+        }
+        congelados.clear();
+    }
 
 }
+

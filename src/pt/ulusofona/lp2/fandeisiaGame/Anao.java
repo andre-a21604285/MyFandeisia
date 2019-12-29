@@ -6,10 +6,11 @@ public class Anao extends Creature {
     public static final String imagePNG = "bird.png";
     public static final String cost = "1";
     private int movement;
+    private static final int INICIALMOVEMENT = 1;
 
     Anao( int id, int idEquipa, String orientacao){
         super( id,  idEquipa,  tipo,  imagePNG,  descricao,  orientacao);
-        movement=1;
+        movement=INICIALMOVEMENT;
     }
 
     public int getMovement() {return movement;}
@@ -30,5 +31,12 @@ public class Anao extends Creature {
         }else{
             orientacao = normalOrientation.get(normalOrientation.indexOf(orientacao)+1);
         }
+    }
+    public void setAlcance(int x){
+        this.movement = x;
+
+    }
+    public void setAlcanceToNormal(){
+        this.movement = INICIALMOVEMENT;
     }
 }

@@ -39,7 +39,13 @@ public abstract class Creature {
     public int getIdEquipa(){return idEquipa;}
     public int getNrPontos(){return nrPontos;}
     public int getX(){return x;}
+    public void setX(int x){
+        this.x = x;
+    }
     public int getY(){return y; }
+    public void setY(int y){
+        this.y = y;
+    }
     public int getOuro(){return ouro; }
     public int getPrata(){return prata; }
     public int getBronze(){return bronze; }
@@ -47,11 +53,9 @@ public abstract class Creature {
     public String getdescricao(){return descricao;}
     public String getTipo(){return tipo;}
     public String getImagePNG(){return imagePNG;}
-
     public void setNrPontos(int pontos){
         this.nrPontos+=pontos;
     }
-
     public void setOuro(){
         this.ouro++;
     }
@@ -61,10 +65,11 @@ public abstract class Creature {
     public void setBronze(){
         this.bronze++;
     }
-
-
     public String toString(){return (id + " | " + tipo + " | " + idEquipa + " | " + nrPontos + " | @ " + x + " | " +
                 y);}
+    public abstract int getMovement();
     public abstract void movimento();
     public abstract void setOrientation();
+    public abstract void setAlcance(int x);
+    public abstract void setAlcanceToNormal();
 }
