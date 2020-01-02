@@ -68,7 +68,7 @@ public abstract class Creature {
     public String toString(){return (id + " | " + tipo + " | " + idEquipa + " | " + nrPontos + " | @ " + x + " | " +
                 y);}
     public abstract int getMovement();
-    public abstract void movimento();
+    public abstract void movimento(int linhas, int colunas);
     public abstract void setOrientation();
     public abstract void setAlcance(int x);
     public abstract void setAlcanceToNormal();

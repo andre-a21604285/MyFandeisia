@@ -8,12 +8,10 @@ import java.util.List;
 public class FandeisiaGameManager {
 
     private int i;
-    private int count;
     int turn = 0;
     int linhas;
     int colunas;
     private boolean jogoADecorrer;
-    String[] criaturas = new String[1000]; // variavel necessária para getResults()
     List<String> results = new ArrayList<String>();
     Equipa user;
     Equipa computer;
@@ -24,6 +22,7 @@ public class FandeisiaGameManager {
     List<Buraco> holes = new ArrayList();
     Map<String,Creature> feiticosTurno;
     List<Creature> congelados;
+    char [][] map;
 
     public FandeisiaGameManager() {
         user = new Equipa(10);
@@ -31,10 +30,10 @@ public class FandeisiaGameManager {
         jogoADecorrer = true;
         feiticosTurno = new HashMap<>();
         congelados = new ArrayList();
+        map= new char[linhas][colunas];
     }
 
     public int startGame(String[] content, int rows, int columns) {
-        Collections.sort(world, new Sort());
         int count;
         for (count = 0; count < content.length; count++) {
             String dados[] = content[count].split(", ");
@@ -78,13 +77,17 @@ public class FandeisiaGameManager {
     }
 
     public void processTurn() {
-        //Movimentar criaturas
-        if(corrente.getId() == 10)
+        if(corrente.getId() == 10){
             corrente=computer;
-        else
+        }else{
             corrente=user;
+        }
+        corrente.movimento(linhas,colunas,holes);
         turn++;
         tiraGelo();
+    }
+    public void toggleAI(boolean active){
+
     }
 
     public List<Creature> getCreatures() {

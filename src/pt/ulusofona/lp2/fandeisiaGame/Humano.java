@@ -12,11 +12,11 @@ public class Humano extends Creature {
         movement=INICIALMOVEMENT;
     }
     public int getMovement() {return movement;}
-    public void movimento(){
+    public void movimento(int linhas, int colunas){
         if(orientacao.equals("Norte")){
-            y+=movement;
-        }else if(orientacao.equals("Sul")){
             y-=movement;
+        }else if(orientacao.equals("Sul")){
+            y+=movement;
         }else if(orientacao.equals("Este")){
             x+=movement;
         }else if(orientacao.equals("Oeste")){
