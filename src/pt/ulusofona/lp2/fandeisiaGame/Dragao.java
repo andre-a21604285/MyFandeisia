@@ -13,7 +13,7 @@ public class Dragao extends Creature {
         movement=INICIALMOVEMENT;
     }
     public int getMovement() {return movement;}
-    public void movimento(int linhas, int colunas){
+    public void movimento(){
         if(orientacao.equals("Norte")){
             y-=movement;
         }else if(orientacao.equals("Sul")){

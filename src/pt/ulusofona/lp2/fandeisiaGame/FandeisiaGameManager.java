@@ -1,4 +1,5 @@
 package pt.ulusofona.lp2.fandeisiaGame;
+import java.io.*;
 import java.util.*;
 import java.lang.*;
 import java.util.ArrayList;
@@ -11,26 +12,35 @@ public class FandeisiaGameManager {
     int turn = 0;
     int linhas;
     int colunas;
-    private boolean jogoADecorrer;
     List<String> results = new ArrayList<String>();
     Equipa user;
     Equipa computer;
     Equipa corrente;
     Equipa vencedor;
     List<Creature> world;
-    List<Tresure> tresure = new ArrayList();
+    List<Tresure> tresures = new ArrayList();
     List<Buraco> holes = new ArrayList();
     Map<String,Creature> feiticosTurno;
     List<Creature> congelados;
-    char [][] map;
+    Mapa map;
 
     public FandeisiaGameManager() {
         user = new Equipa(10);
         computer = new Equipa(20);
-        jogoADecorrer = true;
         feiticosTurno = new HashMap<>();
         congelados = new ArrayList();
-        map= new char[linhas][colunas];
+        map = new Mapa(linhas,colunas);
+    }
+
+    public void addCreature(Equipa equipa, int id, String tipo, String orientacao){
+        equipa.addCreature(id,tipo,orientacao);
+        //adicionar no mapa
+        //map.addPosition();
+    }
+
+    public void addTresure(int id, int x , int y){
+        map.addPosition(x,y,'t');
+        tresures.add(new Tresure(id,x,y));
     }
 
     public int startGame(String[] content, int rows, int columns) {
@@ -82,12 +92,58 @@ public class FandeisiaGameManager {
         }else{
             corrente=user;
         }
-        corrente.movimento(linhas,colunas,holes);
+        corrente.movimento(linhas,colunas,map);
         turn++;
         tiraGelo();
     }
+
     public void toggleAI(boolean active){
 
+    }
+    public boolean saveGame(File fich){
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fich));
+            out.writeObject(turn);
+            out.writeObject(linhas);
+            out.writeObject(colunas);
+            out.writeObject(user);
+            out.writeObject(computer);
+            out.writeObject(corrente);
+            out.writeObject(world);
+            out.writeObject(tresures);
+            out.writeObject(holes);
+            out.writeObject(feiticosTurno);
+            out.writeObject(congelados);
+            out.writeObject(map);
+            out.flush();
+            out.close();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+
+    }
+
+    public boolean loadGame(File fich){
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(fich));
+            turn = (int)in.readObject();
+            linhas =(int)in.readObject();
+            colunas=(int)in.readObject();
+            user=(Equipa)in.readObject();
+            computer=(Equipa)in.readObject();
+            corrente=(Equipa)in.readObject();
+            world=(List<Creature>) in.readObject();
+            tresures=(List<Tresure>) in.readObject();
+            holes=(List<Buraco>) in.readObject();
+            feiticosTurno=(Map<String, Creature>) in.readObject();
+            congelados=(List<Creature>) in.readObject();
+            map=(Mapa) in.readObject();
+            in.close();
+            return true;
+        } catch (IOException | ClassNotFoundException e) {
+            return false;
+        }
     }
 
     public List<Creature> getCreatures() {
@@ -124,6 +180,7 @@ public class FandeisiaGameManager {
         creatureTypes[4][3] = Gigante.cost;
         return creatureTypes;
     }
+
     public String[][] getSpellTypes() {
         String[][] spellTypes = new String[9][3];
         spellTypes[0][0] = Feitico.empurraParaNorte()[0];
@@ -165,7 +222,7 @@ public class FandeisiaGameManager {
     }
 
     public boolean gameIsOver() {
-        if (turn == 15 || tresure.isEmpty() || pointsWorld() == true ) {
+        if (turn == 15 || tresures.isEmpty() || pointsWorld() == true ) {
             return true;
         }
             return false;
@@ -202,12 +259,12 @@ public class FandeisiaGameManager {
 
     public int getElementId(int x, int y) {
         int elementId = 0;
-        int all=world.size()+tresure.size()+holes.size();
+        int all=world.size()+tresures.size()+holes.size();
         for (i = 0; i < all; i++) {
             if (world.get(i).getX() == x && world.get(i).getY() == y) {
                 elementId = world.get(i).getId();
-            } else if(tresure.get(i).getX() == x && tresure.get(i).getY() == y){
-                elementId = tresure.get(i).getId();
+            } else if(tresures.get(i).getX() == x && tresures.get(i).getY() == y){
+                elementId = tresures.get(i).getId();
             }else if(holes.get(i).getX() == x && holes.get(i).getY() == y){
                 elementId = holes.get(i).getId();
             }
@@ -294,7 +351,7 @@ public class FandeisiaGameManager {
 
     private boolean pointsWorld(){
         int sum=0;
-        for(Tresure tresure : tresure){
+        for(Tresure tresure : tresures){
             sum+=tresure.getPoints();//soma os valores de pontos totais no board na variavel sum
         }
         if(user.getPontos() >sum/2 || computer.getPontos() > sum/2){
@@ -354,6 +411,5 @@ public class FandeisiaGameManager {
         }
         congelados.clear();
     }
-
 }
 

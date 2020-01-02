@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.fandeisiaGame;
 
+import sun.font.CreatedFontTracker;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,6 +18,7 @@ public class Equipa {
         pontos=0;
         size=0;
     }
+
     public void addCreature(int id, String tipo, String orientacao){
         switch(tipo){
             case "anao":
@@ -44,82 +47,87 @@ public class Equipa {
 
     }
 
-    public void movimento(int linhas, int colunas, List<Buraco> holes){
+    public void movimento(int linhas, int colunas, Mapa map){
         for(int i = 0 ; i<creatures.size(); i++){
-            creatures.get(i).movimento(linhas,colunas);
+            for(int j=0;j<creatures.get(i).getMovement();j++){
+                int x = creatures.get(i).getX() + position(creatures.get(i).getOrientation())[0];
+                int y = creatures.get(i).getY() + position(creatures.get(i).getOrientation())[1];
+                if(j==creatures.get(i).getMovement()-1){
+                    if(!checkMovement(x,y,creatures.get(i),map) || map.checkBuraco(x,y)){
+                        break;
+                    }
+                    creatures.get(i).movimento();
+                }else if(!checkMovement(x,y,creatures.get(i),map)){
+                    break;
+                }else{
+                    creatures.get(i).movimento();
+                }
+
+             }
+
         }
     }
 
     public void setMoedas(int moedas){
         this.moedas-=moedas;
     }
+
     public int getMoedas(){
         return moedas;
     }
+
     public int getId(){return id;}
+
     public List<Creature> getCreatures(){return creatures;}
+
     public int getPontos(){return pontos;}
+
     public void setPontos(int pontos){
         this.pontos += pontos;
     }
+
     public int getSize(){return size;}
 
-    //------Private methods----------
-    private boolean checkMovement(int linhas, int colunas, Creature creature, List<Buraco> holes){
-        String orientacao=creature.getOrientation();
-        int x=creature.getX();
-        int y=creature.getY();
-        int steps=creature.getMovement();
+    //   Private Methods
+    private int[] position(String orientation){
+        int[] position = new int[2];
+        if(orientation.equals("Norte")){
+            position[0] = 0;
+            position[1] = 1;
+        }else if(orientation.equals("Sul")){
+            position[0] = 0;
+            position[1] = -1;
+        }else if(orientation.equals("Este")){
+            position[0] = 1;
+            position[1] = 0;
+        }else if(orientation.equals("Oeste")){
+            position[0] = -1;
+            position[1] = 0;
+        }else if(orientation.equals("Nordeste")) {
+            position[0] = 1;
+            position[1] = -1;
+        }else if(orientation.equals("Noroeste")){
+            position[0] = -1;
+            position[1] = -1;
+        }else if(orientation.equals("Sudeste")){
+            position[0] = 1;
+            position[1] = 1;
+        }else if(orientation.equals("Sudoeste")){
+            position[0] = -1;
+            position[1] = 1;
+        }
+        return position;
+    }
+
+    private boolean checkMovement(int x, int y, Creature creature, Mapa map){
         boolean isValid=false;
-
-        if(orientacao.equals("Norte")){
-
-        }else if(orientacao.equals("Sul")){
-
-        }else if(orientacao.equals("Este")){
-
-        }else if(orientacao.equals("Oeste")){
-
-        }else if(orientacao.equals("Nordeste")){
-
-        }else if(orientacao.equals("Noroeste")){
-
-        }else if(orientacao.equals("Sudoeste")){
-
-        }else if(orientacao.equals("Sudeste")){
-
+        if(creature.getTipo().equals("Elfo")){
+               isValid=map.checkCreature(x,y);
+        }else if(creature.getTipo().equals("Gigante")){
+            isValid= map.checkGigante(x,y);
+        }else if(creature.getTipo().equals("Anao")||creature.getTipo().equals("Humano")){
+            isValid=map.checkCreature(x,y) || map.checkBuraco(x,y);
         }
-        return isValid;
-    }
-
-    private boolean isValidMovement(int x, int y, int steps,Creature creature, int linhas, int colunas, List<Buraco> holes){
-        boolean isValid = false;
-        //fazer um ciclo for( int i=1 ; i<steps; i++) verificar se é x,y ou x&y
-        if(x<=linhas && x>=0 && y<=colunas && y>=0 && checkBuraco(x, y, steps,creature, holes)
-                && checkPositionCreature(x,y,steps,creature,creatures)){
-
-        }
-        return isValid;
-    }
-
-    private boolean checkBuraco(int x, int y, int steps,Creature creature, List<Buraco> holes){
-        boolean isValid = true;
-        //fazer um ciclo for( int i=1 ; i<steps; i++) verificar se é x,y ou x&y
-        for(int i=1;i<steps;i++){
-
-            for(int j=0; j<holes.size();j++){
-                if(holes.get(j).getX()==x && holes.get(j).getY()==y){
-                    isValid=false;
-                    break;
-                }
-            }
-        }
-        return isValid;
-    }
-
-    private boolean checkPositionCreature(int x, int y, int steps,Creature creature, List<Creature> creatures){
-        boolean isValid=true;
-
         return isValid;
     }
 }
