@@ -168,7 +168,7 @@ public class FandeisiaGameManager {
         creatureTypes[1][0] = Dragao.TIPO;
         creatureTypes[1][1] = Dragao.IMAGE_PNG;
         creatureTypes[1][2] = Dragao.DESCRICAO;
-        creatureTypes[1][3] = Dragao.cost;
+        creatureTypes[1][3] = Dragao.COST;
 
         creatureTypes[2][0] = Humano.TIPO;
         creatureTypes[2][1] = Humano.IMAGE_PNG;
