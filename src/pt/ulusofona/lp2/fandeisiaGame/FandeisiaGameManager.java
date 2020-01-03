@@ -115,7 +115,7 @@ public class FandeisiaGameManager {
 
     public Map<String, Integer> createComputerArmy(){
         Map<String, Integer> equipa = new HashMap<>();
-        equipa.put("Humano", 20);
+        equipa.put("Humano",1);
         return equipa;
     }
 

@@ -52,24 +52,30 @@ public class Equipa {
             for(int j=0;j<creatures.get(i).getMovement();j++){
                 int x = creatures.get(i).getX() + position(creatures.get(i).getOrientation())[0];
                 int y = creatures.get(i).getY() + position(creatures.get(i).getOrientation())[1];
-                if(j==creatures.get(i).getMovement()-1){
-                    if(!checkMovement(x,y,creatures.get(i),map) || map.checkBuraco(x,y)){
+                if(x<linhas && x>0 && y<colunas && y>0 ){
+                    if(j==creatures.get(i).getMovement()-1){
+                        if(!checkMovement(x,y,creatures.get(i),map) || map.checkBuraco(x,y)){
+                            creatures.get(i).setOrientation();
+                            break;
+                        }
+                        creatures.get(i).movimento();
+                    }else if(!checkMovement(x,y,creatures.get(i),map)){
                         break;
+                    }else{
+                        creatures.get(i).movimento();
                     }
-                    creatures.get(i).movimento();
-                }else if(!checkMovement(x,y,creatures.get(i),map)){
-                    break;
                 }else{
-                    creatures.get(i).movimento();
+                    creatures.get(i).setOrientation();
+                    break;
                 }
-
-             }
-
+            }
         }
     }
 
     public void setMoedas(int moedas){
-        this.moedas-=moedas;
+        if(this.moedas-moedas>=0){
+            this.moedas-=moedas;
+        }
     }
 
     public int getMoedas(){
