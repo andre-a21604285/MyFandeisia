@@ -14,15 +14,16 @@ public class Anao extends Creature {
     }
 
     public int getMovement() {return movement;}
+
     public void movimento(){
         if(orientacao.equals("Norte")){
-            y+=movement;
+                y-=movement;
         }else if(orientacao.equals("Sul")){
-            y-=movement;
+                y+=movement;
         }else if(orientacao.equals("Este")){
-            x+=movement;
+                x+=movement;
         }else if(orientacao.equals("Oeste")){
-            x-=movement;
+                x-=movement;
         }
     }
     public void setOrientation(){
@@ -39,4 +40,8 @@ public class Anao extends Creature {
     public void setAlcanceToNormal(){
         this.movement = INICIALMOVEMENT;
     }
+
+
+
+
 }

@@ -15,25 +15,25 @@ public class Elfo extends Creature {
     public int getMovement() {return movement;}
     public void movimento(){
         if(orientacao.equals("Norte")){
-            y+=movement;
-        }else if(orientacao.equals("Nordeste")){
-            y+=movement;
-            x+=movement;
-        }else if(orientacao.equals("Noroeste")){
-            y+=movement;
-            x-=movement;
+            y-=movement;
         }else if(orientacao.equals("Sul")){
-            y-=movement;
-        }else if(orientacao.equals("Sudeste")){
-            y-=movement;
-            x+=movement;
-        }else if(orientacao.equals("Sudoeste")){
-            y-=movement;
-            x-=movement;
+            y+=movement;
         }else if(orientacao.equals("Este")){
             x+=movement;
         }else if(orientacao.equals("Oeste")){
             x-=movement;
+        }else if(orientacao.equals("Nordeste")) {
+                y -= movement;
+                x += movement;
+        }else if(orientacao.equals("Noroeste")){
+                y-=movement;
+                x-=movement;
+        }else if(orientacao.equals("Sudeste")){
+                y+=movement;
+                x+=movement;
+        }else if(orientacao.equals("Sudoeste")){
+                y+=movement;
+                x-=movement;
         }
     }
     public void setOrientation(){
