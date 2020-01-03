@@ -1,12 +1,12 @@
 package pt.ulusofona.lp2.fandeisiaGame;
 
 public class Humano extends Creature {
-    public static final String DESCRICAO ="Anda duas casas mas nunca nas diagonais";
-    public static final String TIPO = "Humano";
-    public static final String IMAGE_PNG= "bird.png";
-    public static final String COST = "3";
+    public static final String DESCRICAO ="Anda duas casas mas nunca nas diagonais";//variavel static por ser final, o valor tipo não altera
+    public static final String TIPO = "Humano";//variavel static por ser final, o valor tipo não altera
+    public static final String IMAGE_PNG= "bird.png";//variavel static por ser final, o valor tipo não altera
+    public static final String COST = "3";//variavel static por ser final, o valor tipo não altera
     private int movement;
-    private static final int INICIALMOVEMENT = 2;
+    private static final int INICIALMOVEMENT = 2;//variavel static por ser final, o valor tipo não altera
     Humano( int id, int idEquipa, String orientacao){
         super( id,  idEquipa, TIPO,  IMAGE_PNG,  DESCRICAO,  orientacao);
         movement=INICIALMOVEMENT;

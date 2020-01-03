@@ -4,7 +4,7 @@ public class Tresure{
     int id;
     int x;
     int y;
-    static final String tipo = "tresure";
+    static final String TIPO = "tresure";//variavel static por ser final, o valor tipo não altera
     int pontos;
 
     Tresure(){}

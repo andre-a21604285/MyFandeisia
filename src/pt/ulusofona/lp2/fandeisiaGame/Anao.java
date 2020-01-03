@@ -1,12 +1,12 @@
 package pt.ulusofona.lp2.fandeisiaGame;
 
 public class Anao extends Creature {
-    public static final String DESCRICAO ="Só anda uma casa e nunca nas diagonais";
-    public static final String TIPO = "Anao";
-    public static final String IMAGE_PNG = "bird.png";
-    public static final String COST = "1";
+    public static final String DESCRICAO ="Só anda uma casa e nunca nas diagonais";//variavel static por ser final, o valor tipo não altera
+    public static final String TIPO = "Anao";//variavel static por ser final, o valor tipo não altera
+    public static final String IMAGE_PNG = "bird.png";//variavel static por ser final, o valor tipo não altera
+    public static final String COST = "1";//variavel static por ser final, o valor tipo não altera
     private int movement;
-    private static final int INICIALMOVEMENT = 1;
+    private static final int INICIALMOVEMENT = 1;//variavel static por ser final, o valor tipo não altera
 
     Anao( int id, int idEquipa, String orientacao){
         super( id,  idEquipa,  TIPO,  IMAGE_PNG,  DESCRICAO,  orientacao);

@@ -1,12 +1,12 @@
 package pt.ulusofona.lp2.fandeisiaGame;
 
 public class Dragao extends Creature {
-    public static final String DESCRICAO ="Voa por todas as casas a volta ";
-    public static final String TIPO = "Dragao";
-    public static final String IMAGE_PNG = "bird.png";
-    public static final String COST = "9";
+    public static final String DESCRICAO ="Voa por todas as casas a volta ";//variavel static por ser final, o valor tipo não altera
+    public static final String TIPO = "Dragao";//variavel static por ser final, o valor tipo não altera
+    public static final String IMAGE_PNG = "bird.png";//variavel static por ser final, o valor tipo não altera
+    public static final String COST = "9";//variavel static por ser final, o valor tipo não altera
     private int movement;
-    private static final int INICIALMOVEMENT = 3;
+    private static final int INICIALMOVEMENT = 3;//variavel static por ser final, o valor tipo não altera
 
     Dragao( int id, int idEquipa, String orientacao){
         super( id,  idEquipa,  TIPO,  IMAGE_PNG,  DESCRICAO,  orientacao);

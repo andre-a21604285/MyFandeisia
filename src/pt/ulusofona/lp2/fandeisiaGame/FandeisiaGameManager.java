@@ -17,7 +17,7 @@ public class FandeisiaGameManager {
     Equipa computer;
     Equipa corrente;
     Equipa vencedor;
-    List<Creature> world;
+    List<Creature> world= new ArrayList();
     List<Tresure> tresures = new ArrayList();
     List<Buraco> holes = new ArrayList();
     Map<String,Creature> feiticosTurno;
@@ -128,14 +128,14 @@ public class FandeisiaGameManager {
     }
 
     public void processTurn() {
+        corrente.movimento(linhas,colunas,map);
+        turn++;
+        tiraGelo();
         if(corrente.getId() == 10){
             corrente=computer;
         }else{
             corrente=user;
         }
-        corrente.movimento(linhas,colunas,map);
-        turn++;
-        tiraGelo();
     }
 
     public void toggleAI(boolean active){

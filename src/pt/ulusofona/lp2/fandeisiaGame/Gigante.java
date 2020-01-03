@@ -1,12 +1,12 @@
 package pt.ulusofona.lp2.fandeisiaGame;
 
 public class Gigante extends Creature {
-    public static final String DESCRICAO ="Anda tres casas mas nunca nas diagonais";
-    public static final String TIPO = "Elfo";
-    public static final String IMAGE_PNG = "bird.png";
-    public static final String COST = "5";
+    public static final String DESCRICAO ="Anda tres casas mas nunca nas diagonais";//variavel static por ser final, o valor tipo não altera
+    public static final String TIPO = "Elfo";//variavel static por ser final, o valor tipo não altera
+    public static final String IMAGE_PNG = "bird.png";//variavel static por ser final, o valor tipo não altera
+    public static final String COST = "5";//variavel static por ser final, o valor tipo não altera
     private int movement;
-    private static final int INICIALMOVEMENT = 3;
+    private static final int INICIALMOVEMENT = 3;//variavel static por ser final, o valor tipo não altera
     Gigante( int id, int idEquipa, String orientacao){
         super( id,  idEquipa,  TIPO,  IMAGE_PNG,  DESCRICAO,  orientacao);
         movement=INICIALMOVEMENT;
