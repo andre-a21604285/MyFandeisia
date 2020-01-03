@@ -176,7 +176,7 @@ public class FandeisiaGameManager {
         creatureTypes[2][3] = Humano.COST;
 
         creatureTypes[3][0] = Elfo.TIPO;
-        creatureTypes[3][1] = Elfo.COST;
+        creatureTypes[3][1] = Elfo.IMAGE_PNG;
         creatureTypes[3][2] = Elfo.DESCRICAO;
         creatureTypes[3][3] = Elfo.COST;
 

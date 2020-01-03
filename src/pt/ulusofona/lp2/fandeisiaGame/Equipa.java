@@ -23,23 +23,23 @@ public class Equipa {
         switch(tipo){
             case "anao":
                 creatures.add( new Anao(id,this.id,orientacao));
-                setMoedas(Integer.parseInt(Anao.cost));
+                setMoedas(Integer.parseInt(Anao.COST));
                 break;
             case "dragao":
                 creatures.add( new Dragao(id,this.id,orientacao));
-                setMoedas(Integer.parseInt(Dragao.cost));
+                setMoedas(Integer.parseInt(Dragao.COST));
                 break;
             case "humano":
                 creatures.add( new Humano(id,this.id,orientacao));
-                setMoedas(Integer.parseInt(Humano.cost));
+                setMoedas(Integer.parseInt(Humano.COST));
                 break;
             case "gigante":
                 creatures.add( new Gigante(id,this.id,orientacao));
-                setMoedas(Integer.parseInt(Gigante.cost));
+                setMoedas(Integer.parseInt(Gigante.COST));
                 break;
             case "elfo":
                 creatures.add( new Elfo(id,this.id,orientacao));
-                setMoedas(Integer.parseInt(Elfo.cost));
+                setMoedas(Integer.parseInt(Elfo.COST));
                 break;
         }
         size++;
