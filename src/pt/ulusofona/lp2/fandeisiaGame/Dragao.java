@@ -4,7 +4,7 @@ public class Dragao extends Creature {
     public static final String DESCRICAO ="Voa por todas as casas a volta ";
     public static final String TIPO = "Dragao";
     public static final String IMAGE_PNG = "bird.png";
-    public static final String COST = "9";
+    public static final String cost = "9";
     private int movement;
     private static final int INICIALMOVEMENT = 3;
 
