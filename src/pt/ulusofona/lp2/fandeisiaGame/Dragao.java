@@ -9,7 +9,7 @@ public class Dragao extends Creature {
     private static final int INICIALMOVEMENT = 3;
 
     Dragao( int id, int idEquipa, String orientacao){
-        super( id,  idEquipa,  TIPO,  IMAGE_PNG, DESCRICAO,  orientacao);
+        super( id,  idEquipa,  TIPO,  IMAGE_PNG,  DESCRICAO,  orientacao);
         movement=INICIALMOVEMENT;
     }
     public int getMovement() {return movement;}
