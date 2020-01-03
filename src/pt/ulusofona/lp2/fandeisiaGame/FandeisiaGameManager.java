@@ -30,37 +30,62 @@ public class FandeisiaGameManager {
         feiticosTurno = new HashMap<>();
         congelados = new ArrayList();
         map = new Mapa(linhas,colunas);
+
     }
 
-    public void addCreature(Equipa equipa, int id, String tipo, String orientacao){
-        equipa.addCreature(id,tipo,orientacao);
-        //adicionar no mapa
-        //map.addPosition();
-    }
+    public void addCreature(Equipa equipa, int id, String tipo, String orientacao, int x , int y, int rows, int columns){
 
-    public void addTresure(int id, int x , int y){
+            equipa.addCreature(id,tipo,orientacao);
+            if(tipo.equals("Elfo")){
+                map.addPosition(x,y,'e');
+            }else if(tipo.equals("Anao")){
+                map.addPosition(x,y,'a');
+            }else if(tipo.equals("Dragao")){
+                map.addPosition(x,y,'d');
+            }else if(tipo.equals("Gigante")){
+                map.addPosition(x,y,'g');
+            }else if(tipo.equals("Humano")){
+                map.addPosition(x,y,'h');
+            }
+        }
+
+    public void addTresure(int id,String type, int x , int y){
         map.addPosition(x,y,'t');
-        tresures.add(new Tresure(id,x,y));
+        tresures.add(new Tresure(id,type,x,y));
+    }
+
+    public void addHole(int id, int x , int y){
+        map.addPosition(x,y,'b');
+        holes.add(new Buraco(id,x,y));
     }
 
     public int startGame(String[] content, int rows, int columns) {
         int count;
+        linhas = rows;
+        colunas = columns;
+        map = new Mapa(linhas,colunas);
         for (count = 0; count < content.length; count++) {
             String dados[] = content[count].split(", ");
             dados[0] = dados[0].replace("id: ", "");
             dados[1] = dados[1].replace("type: ", "");
             int id = Integer.parseInt(dados[0]);
             String type = dados[1];
-            if (dados[1].equals("treasure")) {
+            if (dados[1].equals("gold")||dados[1].equals("silver")||dados[1].equals("bronze")) {
                 dados[2] = dados[2].replace("x: ", "");
                 dados[3] = dados[3].replace("y: ", "");
                 int x = Integer.parseInt(dados[2]);
                 int y = Integer.parseInt(dados[3]);
+                if(checkAdd(x,y,rows,columns,map)){
+                    addTresure(id,type,x,y);
+                }
             } else if (dados[1].equals("hole")) {
                 dados[2] = dados[2].replace("x: ", "");
                 dados[3] = dados[3].replace("y: ", "");
                 int x = Integer.parseInt(dados[2]);
                 int y = Integer.parseInt(dados[3]);
+                if(checkAdd(x,y,rows,columns,map)){
+                    addHole(id,x,y);
+                }
             } else {
                 dados[2] = dados[2].replace("teamId: ", "");
                 int teamId = Integer.parseInt(dados[2]);
@@ -70,12 +95,28 @@ public class FandeisiaGameManager {
                 int y = Integer.parseInt(dados[4]);
                 dados[5] = dados[5].replace("orientation: ", "");
                 String orientation = dados[5];
+                if(checkAdd(x,y,rows,columns,map)){
+                    addCreature(getEquipa(teamId),id,type,orientation,x,y, rows, columns);
+             }
             }
             count++;
         }
-        linhas = rows;
-        colunas = columns;
+
         return validation();
+    }
+
+    public Equipa getEquipa(int teamId){
+        if(teamId == 10){
+            return user;
+        }else{
+            return computer;
+        }
+    }
+
+    public Map<String, Integer> createComputerArmy(){
+        Map<String, Integer> equipa = new HashMap<>();
+        equipa.put("Humano", 20);
+        return equipa;
     }
 
     public void setInitialTeam(int teamId) {
@@ -100,6 +141,7 @@ public class FandeisiaGameManager {
     public void toggleAI(boolean active){
 
     }
+
     public boolean saveGame(File fich){
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fich));
@@ -144,12 +186,6 @@ public class FandeisiaGameManager {
         } catch (IOException | ClassNotFoundException e) {
             return false;
         }
-    }
-
-    public Map<String, Integer> createComputerArmy(){
-        Map<String, Integer> equipa = new HashMap<>();
-        equipa.put("Humano", 20);
-        return equipa;
     }
 
     public List<Creature> getCreatures() {
@@ -265,17 +301,38 @@ public class FandeisiaGameManager {
 
     public int getElementId(int x, int y) {
         int elementId = 0;
-        int all=world.size()+tresures.size()+holes.size();
-        for (i = 0; i < all; i++) {
-            if (world.get(i).getX() == x && world.get(i).getY() == y) {
-                elementId = world.get(i).getId();
-            } else if(tresures.get(i).getX() == x && tresures.get(i).getY() == y){
-                elementId = tresures.get(i).getId();
-            }else if(holes.get(i).getX() == x && holes.get(i).getY() == y){
-                elementId = holes.get(i).getId();
-            }
+        if(getCreatureByPosition(x,y)!=null){
+            elementId=getCreatureByPosition(x,y).getId();
+        }else if(getTresure(x,y)!=null){
+            elementId=getTresure(x,y).getId();
+        }else if(getBuraco(x,y)!=null){
+            elementId=getBuraco(x,y).getId();
         }
         return elementId;
+    }
+
+    public Tresure getTresure(int x , int y){
+        int i;
+        Tresure tresure=null;
+        for(i=0; i<tresures.size();i++){
+            if(tresures.get(i).getX()==x && tresures.get(i).getY()==y){
+                tresure=tresures.get(i);
+                break;
+            }
+        }
+        return tresure;
+    }
+
+    public Buraco getBuraco(int x , int y){
+        int i;
+        Buraco hole=null;
+        for(i=0; i<holes.size();i++){
+            if(holes.get(i).getX()==x && holes.get(i).getY()==y){
+                hole=holes.get(i);
+                break;
+            }
+        }
+        return hole;
     }
 
     public int getCurrentTeamId() {
@@ -377,6 +434,7 @@ public class FandeisiaGameManager {
         }
         return creature;
     }
+
     private boolean hasBuraco(int x, int y){
         int i;
         boolean found=false;
@@ -411,11 +469,19 @@ public class FandeisiaGameManager {
         }
         return found;
     }
+
     private void tiraGelo(){
         for(int i=0; i<congelados.size();i++){
             congelados.get(i).setAlcanceToNormal();
         }
         congelados.clear();
+    }
+
+    private boolean checkAdd(int x, int y, int rows, int columns, Mapa map){
+        if(x>=0 && x<rows && y>=0 && y<columns && !map.isPositionFilled(x,y)){
+            return true;
+        }
+        return false;
     }
 }
 

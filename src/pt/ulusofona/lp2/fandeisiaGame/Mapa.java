@@ -7,6 +7,7 @@ public class Mapa {
 
     Mapa(int linhas, int colunas){
         map = new char[linhas][colunas];
+        fillMap(linhas,colunas);
     }
     public void addPosition(int x, int y, char symbol){
         map[x][y] = symbol;
@@ -31,5 +32,13 @@ public class Mapa {
 
     public boolean checkTresure(int x, int y){
         return map[x][y] == 't';
+    }
+
+    private void fillMap(int linhas, int colunas){
+        for(int i=0;i<linhas;i++){
+            for(int j=0;j<colunas;j++){
+                map[i][j] = '0';
+            }
+        }
     }
 }

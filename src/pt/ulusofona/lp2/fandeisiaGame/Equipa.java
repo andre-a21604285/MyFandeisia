@@ -21,23 +21,23 @@ public class Equipa {
 
     public void addCreature(int id, String tipo, String orientacao){
         switch(tipo){
-            case "anao":
+            case "Anao":
                 creatures.add( new Anao(id,this.id,orientacao));
                 setMoedas(Integer.parseInt(Anao.COST));
                 break;
-            case "dragao":
+            case "Dragao":
                 creatures.add( new Dragao(id,this.id,orientacao));
                 setMoedas(Integer.parseInt(Dragao.COST));
                 break;
-            case "humano":
+            case "Humano":
                 creatures.add( new Humano(id,this.id,orientacao));
                 setMoedas(Integer.parseInt(Humano.COST));
                 break;
-            case "gigante":
+            case "Gigante":
                 creatures.add( new Gigante(id,this.id,orientacao));
                 setMoedas(Integer.parseInt(Gigante.COST));
                 break;
-            case "elfo":
+            case "Elfo":
                 creatures.add( new Elfo(id,this.id,orientacao));
                 setMoedas(Integer.parseInt(Elfo.COST));
                 break;
