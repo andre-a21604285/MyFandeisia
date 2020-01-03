@@ -127,9 +127,9 @@ public class FandeisiaGameManager {
     public boolean loadGame(File fich){
         try {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(fich));
-            turn = (int)in.readObject();
-            linhas =(int)in.readObject();
-            colunas=(int)in.readObject();
+            turn = in.readInt();
+            linhas =in.readInt();
+            colunas=in.readInt();
             user=(Equipa)in.readObject();
             computer=(Equipa)in.readObject();
             corrente=(Equipa)in.readObject();
@@ -146,6 +146,12 @@ public class FandeisiaGameManager {
         }
     }
 
+    public Map<String, Integer> createComputerArmy(){
+        Map<String, Integer> equipa = new HashMap<>();
+        equipa.put("Humano", 20);
+        return equipa;
+    }
+
     public List<Creature> getCreatures() {
         world =user.getCreatures();
         world.addAll(computer.getCreatures());//addAll = adiciona uma colecao á lista
@@ -154,30 +160,30 @@ public class FandeisiaGameManager {
 
     public String[][] getCreatureTypes() {
         String[][] creatureTypes = new String[5][4];
-        creatureTypes[0][0] = Anao.tipo;
-        creatureTypes[0][1] = Anao.imagePNG;
-        creatureTypes[0][2] = Anao.descricao;
-        creatureTypes[0][3] = Anao.cost;
+        creatureTypes[0][0] = Anao.TIPO;
+        creatureTypes[0][1] = Anao.IMAGE_PNG;
+        creatureTypes[0][2] = Anao.DESCRICAO;
+        creatureTypes[0][3] = Anao.COST;
 
-        creatureTypes[1][0] = Dragao.tipo;
-        creatureTypes[1][1] = Dragao.imagePNG;
-        creatureTypes[1][2] = Dragao.descricao;
-        creatureTypes[1][3] = Dragao.cost;
+        creatureTypes[1][0] = Dragao.TIPO;
+        creatureTypes[1][1] = Dragao.IMAGE_PNG;
+        creatureTypes[1][2] = Dragao.DESCRICAO;
+        creatureTypes[1][3] = Dragao.COST;
 
-        creatureTypes[2][0] = Humano.tipo;
-        creatureTypes[2][1] = Humano.imagePNG;
-        creatureTypes[2][2] = Humano.descricao;
-        creatureTypes[2][3] = Humano.cost;
+        creatureTypes[2][0] = Humano.TIPO;
+        creatureTypes[2][1] = Humano.IMAGE_PNG;
+        creatureTypes[2][2] = Humano.DESCRICAO;
+        creatureTypes[2][3] = Humano.COST;
 
-        creatureTypes[3][0] = Elfo.tipo;
-        creatureTypes[3][1] = Elfo.imagePNG;
-        creatureTypes[3][2] = Elfo.descricao;
-        creatureTypes[3][3] = Elfo.cost;
+        creatureTypes[3][0] = Elfo.TIPO;
+        creatureTypes[3][1] = Elfo.COST;
+        creatureTypes[3][2] = Elfo.DESCRICAO;
+        creatureTypes[3][3] = Elfo.COST;
 
-        creatureTypes[4][0] = Gigante.tipo;
-        creatureTypes[4][1] = Gigante.imagePNG;
-        creatureTypes[4][2] = Gigante.descricao;
-        creatureTypes[4][3] = Gigante.cost;
+        creatureTypes[4][0] = Gigante.TIPO;
+        creatureTypes[4][1] = Gigante.IMAGE_PNG;
+        creatureTypes[4][2] = Gigante.DESCRICAO;
+        creatureTypes[4][3] = Gigante.COST;
         return creatureTypes;
     }
 

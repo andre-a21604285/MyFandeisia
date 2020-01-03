@@ -4,7 +4,7 @@ public class Buraco {
     int id;
     int x;
     int y;
-    static final String tipo = "buraco";
+    static final String TIPO = "buraco";
 
     Buraco(){}
 

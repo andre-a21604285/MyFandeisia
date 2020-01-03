@@ -1,15 +1,15 @@
 package pt.ulusofona.lp2.fandeisiaGame;
 
 public class Anao extends Creature {
-    public static final String descricao ="Só anda uma casa e nunca nas diagonais";
-    public static final String tipo = "Anao";
-    public static final String imagePNG = "bird.png";
-    public static final String cost = "1";
+    public static final String DESCRICAO ="Só anda uma casa e nunca nas diagonais";
+    public static final String TIPO = "Anao";
+    public static final String IMAGE_PNG = "bird.png";
+    public static final String COST = "1";
     private int movement;
     private static final int INICIALMOVEMENT = 1;
 
     Anao( int id, int idEquipa, String orientacao){
-        super( id,  idEquipa,  tipo,  imagePNG,  descricao,  orientacao);
+        super( id,  idEquipa,  TIPO,  IMAGE_PNG,  DESCRICAO,  orientacao);
         movement=INICIALMOVEMENT;
     }
 
