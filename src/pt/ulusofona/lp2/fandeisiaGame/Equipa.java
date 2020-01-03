@@ -73,9 +73,7 @@ public class Equipa {
     }
 
     public void setMoedas(int moedas){
-        if(this.moedas-moedas>=0){
             this.moedas-=moedas;
-        }
     }
 
     public int getMoedas(){
@@ -133,6 +131,14 @@ public class Equipa {
             isValid= map.checkGigante(x,y);
         }else if(creature.getTipo().equals("Anao")||creature.getTipo().equals("Humano")){
             isValid=map.checkCreature(x,y) || map.checkBuraco(x,y);
+        }
+        return isValid;
+    }
+
+    private boolean checkMoedas(Creature creature){
+        boolean isValid=false;
+        if(this.moedas - creature.getCost()>=0){
+            isValid=true;
         }
         return isValid;
     }

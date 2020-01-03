@@ -7,10 +7,12 @@ public class Dragao extends Creature {
     public static final String COST = "9";//variavel static por ser final, o valor tipo não altera
     private int movement;
     private static final int INICIALMOVEMENT = 3;//variavel static por ser final, o valor tipo não altera
+    int custo;
 
     Dragao( int id, int idEquipa, String orientacao){
         super( id,  idEquipa,  TIPO,  IMAGE_PNG,  DESCRICAO,  orientacao);
         movement=INICIALMOVEMENT;
+        this.custo=9;
     }
     public int getMovement() {return movement;}
     public void movimento(){
@@ -50,5 +52,9 @@ public class Dragao extends Creature {
     }
     public void setAlcanceToNormal(){
         this.movement = INICIALMOVEMENT;
+    }
+
+    public int getCost(){
+        return this.custo;
     }
 }

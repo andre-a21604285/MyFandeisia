@@ -33,7 +33,7 @@ public class FandeisiaGameManager {
 
     }
 
-    public void addCreature(Equipa equipa, int id, String tipo, String orientacao, int x , int y, int rows, int columns){
+    public void addCreature(Equipa equipa, int id, String tipo, String orientacao, int x , int y){
 
             equipa.addCreature(id,tipo,orientacao);
             if(tipo.equals("Elfo")){
@@ -96,7 +96,7 @@ public class FandeisiaGameManager {
                 dados[5] = dados[5].replace("orientation: ", "");
                 String orientation = dados[5];
                 if(checkAdd(x,y,rows,columns,map)){
-                    addCreature(getEquipa(teamId),id,type,orientation,x,y, rows, columns);
+                    addCreature(getEquipa(teamId),id,type,orientation,x,y);
              }
             }
             count++;
@@ -364,7 +364,7 @@ public class FandeisiaGameManager {
     }
 
     public String whoIsLordEder(){
-        String lord="Ederzito Antonio Macedo Lopes";
+        String lord="Éderzito António Macedo Lopes";
         return lord;
     }
 
