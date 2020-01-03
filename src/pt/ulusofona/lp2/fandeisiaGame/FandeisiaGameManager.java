@@ -79,12 +79,13 @@ public class FandeisiaGameManager {
 
     public void processTurn() {
         //Movimentar criaturas
-        if(corrente.getId() == 10)
-            corrente=computer;
-        else
-            corrente=user;
-        turn++;
-        tiraGelo();
+        if(corrente.getId() == 10) {
+            corrente = computer;
+        }else {
+            corrente = user;
+            turn++;
+            tiraGelo();
+        }
     }
 
     public List<Creature> getCreatures() {
@@ -95,30 +96,30 @@ public class FandeisiaGameManager {
 
     public String[][] getCreatureTypes() {
         String[][] creatureTypes = new String[5][4];
-        creatureTypes[0][0] = Anao.tipo;
-        creatureTypes[0][1] = Anao.imagePNG;
-        creatureTypes[0][2] = Anao.descricao;
-        creatureTypes[0][3] = Anao.cost;
+        creatureTypes[0][0] = Anao.TIPO;
+        creatureTypes[0][1] = Anao.IMAGE_PNG;
+        creatureTypes[0][2] = Anao.DESCRICAO;
+        creatureTypes[0][3] = Anao.COST;
 
-        creatureTypes[1][0] = Dragao.tipo;
-        creatureTypes[1][1] = Dragao.imagePNG;
-        creatureTypes[1][2] = Dragao.descricao;
-        creatureTypes[1][3] = Dragao.cost;
+        creatureTypes[1][0] = Dragao.TIPO;
+        creatureTypes[1][1] = Dragao.IMAGE_PNG;
+        creatureTypes[1][2] = Dragao.DESCRICAO;
+        creatureTypes[1][3] = Dragao.COST;
 
-        creatureTypes[2][0] = Humano.tipo;
-        creatureTypes[2][1] = Humano.imagePNG;
-        creatureTypes[2][2] = Humano.descricao;
-        creatureTypes[2][3] = Humano.cost;
+        creatureTypes[2][0] = Humano.TIPO;
+        creatureTypes[2][1] = Humano.IMAGE_PNG;
+        creatureTypes[2][2] = Humano.DESCRICAO;
+        creatureTypes[2][3] = Humano.COST;
 
-        creatureTypes[3][0] = Elfo.tipo;
-        creatureTypes[3][1] = Elfo.imagePNG;
-        creatureTypes[3][2] = Elfo.descricao;
-        creatureTypes[3][3] = Elfo.cost;
+        creatureTypes[3][0] = Elfo.TIPO;
+        creatureTypes[3][1] = Elfo.IMAGE_PNG;
+        creatureTypes[3][2] = Elfo.DESCRICAO;
+        creatureTypes[3][3] = Elfo.COST;
 
-        creatureTypes[4][0] = Gigante.tipo;
-        creatureTypes[4][1] = Gigante.imagePNG;
-        creatureTypes[4][2] = Gigante.descricao;
-        creatureTypes[4][3] = Gigante.cost;
+        creatureTypes[4][0] = Gigante.TIPO;
+        creatureTypes[4][1] = Gigante.IMAGE_PNG;
+        creatureTypes[4][2] = Gigante.DESCRICAO;
+        creatureTypes[4][3] = Gigante.COST;
         return creatureTypes;
     }
     public String[][] getSpellTypes() {
