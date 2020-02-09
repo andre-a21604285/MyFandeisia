@@ -35,17 +35,22 @@ public class FandeisiaGameManager {
 
     public void addCreature(Equipa equipa, int id, String tipo, String orientacao, int x , int y){
 
-            equipa.addCreature(id,tipo,orientacao);
+            equipa.addCreature(id,tipo,x,y,orientacao);
             if(tipo.equals("Elfo")){
                 map.addPosition(x,y,'e');
+                world.add(new Elfo(id,equipa.getId(),x,y,orientacao));
             }else if(tipo.equals("Anao")){
                 map.addPosition(x,y,'a');
+                world.add(new Anao(id,equipa.getId(),x,y,orientacao));
             }else if(tipo.equals("Dragao")){
                 map.addPosition(x,y,'d');
+                world.add(new Dragao(id,equipa.getId(),x,y,orientacao));
             }else if(tipo.equals("Gigante")){
                 map.addPosition(x,y,'g');
+                world.add(new Gigante(id,equipa.getId(),x,y,orientacao));
             }else if(tipo.equals("Humano")){
                 map.addPosition(x,y,'h');
+                world.add(new Humano(id,equipa.getId(),x,y,orientacao));
             }
         }
 
@@ -70,7 +75,7 @@ public class FandeisiaGameManager {
             dados[1] = dados[1].replace("type: ", "");
             int id = Integer.parseInt(dados[0]);
             String type = dados[1];
-            if (dados[1].equals("gold")||dados[1].equals("silver")||dados[1].equals("bronze")) {
+            if (dados[1].equals("gold") || dados[1].equals("silver") || dados[1].equals("bronze")) {
                 dados[2] = dados[2].replace("x: ", "");
                 dados[3] = dados[3].replace("y: ", "");
                 int x = Integer.parseInt(dados[2]);
@@ -97,10 +102,10 @@ public class FandeisiaGameManager {
                 String orientation = dados[5];
                 if(checkAdd(x,y,rows,columns,map)){
                     addCreature(getEquipa(teamId),id,type,orientation,x,y);
-             }
+                }
             }
-            count++;
         }
+
 
         return validation();
     }
@@ -128,7 +133,7 @@ public class FandeisiaGameManager {
     }
 
     public void processTurn() {
-        corrente.movimento(linhas,colunas,map);
+        tresures = corrente.movimento(linhas,colunas,map,tresures);
         turn++;
         tiraGelo();
         if(corrente.getId() == 10){
@@ -189,8 +194,7 @@ public class FandeisiaGameManager {
     }
 
     public List<Creature> getCreatures() {
-        world =user.getCreatures();
-        world.addAll(computer.getCreatures());//addAll = adiciona uma colecao á lista
+
         return world;
     }
 
@@ -483,5 +487,7 @@ public class FandeisiaGameManager {
         }
         return false;
     }
+
+
 }
 

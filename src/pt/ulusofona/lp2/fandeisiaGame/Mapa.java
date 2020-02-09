@@ -18,21 +18,21 @@ public class Mapa {
         return map[x][y]!='0';
     }
 
-    public boolean checkCreature(int x, int y){
+    public boolean checkCreature(int x, int y){ //verifica se há uma criatura
         return map[x][y] != '0' && map[x][y] !='b' && map[x][y] !='t';
     }
 
-    public boolean checkBuraco(int x, int y){
+    public boolean checkBuraco(int x, int y){ //verirfica se há um buraco
         return map[x][y] == 'b';
     }
 
     public boolean checkGigante(int x, int y){
         return map[x][y] == 'g';
-    }
+    } //verifica se há um gigante
 
     public boolean checkTresure(int x, int y){
         return map[x][y] == 't';
-    }
+    } // verifica se há um tesouro
 
     private void fillMap(int linhas, int colunas){
         for(int i=0;i<linhas;i++){

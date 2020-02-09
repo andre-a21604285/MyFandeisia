@@ -19,50 +19,63 @@ public class Equipa {
         size=0;
     }
 
-    public void addCreature(int id, String tipo, String orientacao){
+    public void addCreature(int id, String tipo, int x, int y, String orientacao){
         switch(tipo){
             case "Anao":
-                creatures.add( new Anao(id,this.id,orientacao));
+                creatures.add( new Anao(id,this.id,x,y,orientacao));
                 setMoedas(Integer.parseInt(Anao.COST));
                 break;
             case "Dragao":
-                creatures.add( new Dragao(id,this.id,orientacao));
+                creatures.add( new Dragao(id,this.id,x,y,orientacao));
                 setMoedas(Integer.parseInt(Dragao.COST));
                 break;
             case "Humano":
-                creatures.add( new Humano(id,this.id,orientacao));
+                creatures.add( new Humano(id,this.id,x,y,orientacao));
                 setMoedas(Integer.parseInt(Humano.COST));
                 break;
             case "Gigante":
-                creatures.add( new Gigante(id,this.id,orientacao));
+                creatures.add( new Gigante(id,this.id,x,y,orientacao));
                 setMoedas(Integer.parseInt(Gigante.COST));
                 break;
             case "Elfo":
-                creatures.add( new Elfo(id,this.id,orientacao));
+                creatures.add( new Elfo(id,this.id,x,y,orientacao));
                 setMoedas(Integer.parseInt(Elfo.COST));
                 break;
         }
         size++;
-        Collections.sort(creatures, new Sort());
+
 
     }
 
-    public void movimento(int linhas, int colunas, Mapa map){
+    public List<Tresure> movimento(int linhas, int colunas, Mapa map,List<Tresure> tresures){
         for(int i = 0 ; i<creatures.size(); i++){
             for(int j=0;j<creatures.get(i).getMovement();j++){
                 int x = creatures.get(i).getX() + position(creatures.get(i).getOrientation())[0];
                 int y = creatures.get(i).getY() + position(creatures.get(i).getOrientation())[1];
-                if(x<linhas && x>0 && y<colunas && y>0 ){
-                    if(j==creatures.get(i).getMovement()-1){
-                        if(!checkMovement(x,y,creatures.get(i),map) || map.checkBuraco(x,y)){
+                if(x<colunas && x>=0 && y<linhas && y>=0 ){
+                    if(j==creatures.get(i).getMovement()-1){ //TALVEZ APAGAR
+                        if(!checkMovement(x,y,creatures.get(i),map) || map.checkBuraco(x,y) || map.checkCreature(x,y)){
                             creatures.get(i).setOrientation();
                             break;
                         }
                         creatures.get(i).movimento();
+                        for(int z=0;z<tresures.size();z++){
+                            if(tresures.get(z).getX()==x && tresures.get(z).getY()==y){
+                                setPontos(tresures.get(z).getPoints());
+                                tresures.remove(tresures.get(z));
+                            }
+                        }
+
                     }else if(!checkMovement(x,y,creatures.get(i),map)){
                         break;
                     }else{
                         creatures.get(i).movimento();
+                        for(int z=0;z<tresures.size();z++){
+                            if(tresures.get(z).getX()==x && tresures.get(z).getY()==y){
+                                setPontos(tresures.get(z).getPoints());
+                                tresures.remove(tresures.get(z));
+                            }
+                        }
                     }
                 }else{
                     creatures.get(i).setOrientation();
@@ -70,6 +83,7 @@ public class Equipa {
                 }
             }
         }
+        return tresures;
     }
 
     public void setMoedas(int moedas){
@@ -82,7 +96,9 @@ public class Equipa {
 
     public int getId(){return id;}
 
-    public List<Creature> getCreatures(){return creatures;}
+    public List<Creature> getCreatures(){
+        Collections.sort(creatures, new Sort());
+        return creatures;}
 
     public int getPontos(){return pontos;}
 
@@ -97,10 +113,10 @@ public class Equipa {
         int[] position = new int[2];
         if(orientation.equals("Norte")){
             position[0] = 0;
-            position[1] = 1;
+            position[1] = -1;
         }else if(orientation.equals("Sul")){
             position[0] = 0;
-            position[1] = -1;
+            position[1] = 1;
         }else if(orientation.equals("Este")){
             position[0] = 1;
             position[1] = 0;
@@ -126,11 +142,13 @@ public class Equipa {
     private boolean checkMovement(int x, int y, Creature creature, Mapa map){
         boolean isValid=false;
         if(creature.getTipo().equals("Elfo")){
-               isValid=map.checkCreature(x,y);
+               isValid = !map.checkCreature(x,y);
         }else if(creature.getTipo().equals("Gigante")){
-            isValid= map.checkGigante(x,y);
+            isValid = !map.checkGigante(x,y);
         }else if(creature.getTipo().equals("Anao")||creature.getTipo().equals("Humano")){
-            isValid=map.checkCreature(x,y) || map.checkBuraco(x,y);
+            isValid=!(map.checkCreature(x,y) || map.checkBuraco(x,y));
+        }else{
+            isValid=true;
         }
         return isValid;
     }

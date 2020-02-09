@@ -3,39 +3,40 @@ package pt.ulusofona.lp2.fandeisiaGame;
 public class Dragao extends Creature {
     public static final String DESCRICAO ="Voa por todas as casas a volta ";//variavel static por ser final, o valor tipo não altera
     public static final String TIPO = "Dragao";//variavel static por ser final, o valor tipo não altera
-    public static final String IMAGE_PNG = "bird.png";//variavel static por ser final, o valor tipo não altera
+    public static final String IMAGE_PNG = "dragon.png";//variavel static por ser final, o valor tipo não altera
     public static final String COST = "9";//variavel static por ser final, o valor tipo não altera
     private int movement;
     private static final int INICIALMOVEMENT = 3;//variavel static por ser final, o valor tipo não altera
     int custo;
 
-    Dragao( int id, int idEquipa, String orientacao){
-        super( id,  idEquipa,  TIPO,  IMAGE_PNG,  DESCRICAO,  orientacao);
+    Dragao( int id, int idEquipa,int x, int y, String orientacao){
+        super( id,  idEquipa,  TIPO,  IMAGE_PNG,  DESCRICAO, x, y,  orientacao);
         movement=INICIALMOVEMENT;
         this.custo=9;
     }
+
     public int getMovement() {return movement;}
     public void movimento(){
         if(orientacao.equals("Norte")){
-            y-=movement;
+            y-=1;
         }else if(orientacao.equals("Sul")){
-            y+=movement;
+            y+=1;
         }else if(orientacao.equals("Este")){
-            x+=movement;
+            x+=1;
         }else if(orientacao.equals("Oeste")){
-            x-=movement;
+            x-=1;
         }else if(orientacao.equals("Nordeste")) {
-            y -= movement;
-            x += movement;
+            y -= 1;
+            x += 1;
         }else if(orientacao.equals("Noroeste")){
-            y-=movement;
-            x-=movement;
+            y-=1;
+            x-=1;
         }else if(orientacao.equals("Sudeste")){
-            y+=movement;
-            x+=movement;
+            y+=1;
+            x+=1;
         }else if(orientacao.equals("Sudoeste")){
-            y+=movement;
-            x-=movement;
+            y+=1;
+            x-=1;
         }
     }
 

@@ -23,7 +23,7 @@ public abstract class Creature {
 
     Creature(){}
 
-    Creature( int id, int idEquipa, String tipo, String imagePNG, String descricao, String orientacao){
+    Creature( int id, int idEquipa, String tipo, String imagePNG, String descricao,int x, int y, String orientacao){
         this.nrPontos = 0;
         this.ouro = 0;
         this.prata = 0;
@@ -34,6 +34,8 @@ public abstract class Creature {
         this.id = id;
         this.idEquipa = idEquipa;
         this.orientacao = orientacao;
+        this.x=x;
+        this.y=y;
     }
 
     public int getId(){return id;}
