@@ -9,10 +9,11 @@ import java.util.List;
 public class FandeisiaGameManager {
 
     private int i;
-    int turn = 0;
+    static int turn;
     int linhas;
     int colunas;
     List<String> results = new ArrayList<String>();
+    Stats stats;
     Equipa user;
     Equipa computer;
     Equipa corrente;
@@ -30,7 +31,8 @@ public class FandeisiaGameManager {
         feiticosTurno = new HashMap<>();
         congelados = new ArrayList();
         map = new Mapa(linhas,colunas);
-
+        turn = 0;
+        stats = new Stats();
     }
 
     public void addCreature(Equipa equipa, int id, String tipo, String orientacao, int x , int y){
@@ -67,11 +69,15 @@ public class FandeisiaGameManager {
         holes.add(new Buraco(id,x,y));
     }
 
-    public int startGame(String[] content, int rows, int columns) {
+    public void startGame(String[] content, int rows, int columns) throws InsufficientCoinsException {
         int count;
         linhas = rows;
         colunas = columns;
         map = new Mapa(linhas,colunas);
+        boolean userValid=true;
+        boolean computerValid=true;
+        String message;
+
         for (count = 0; count < content.length; count++) {
             String dados[] = content[count].split(", ");
             dados[0] = dados[0].replace("id: ", "");
@@ -95,23 +101,37 @@ public class FandeisiaGameManager {
                     addHole(id,x,y);
                 }
             } else {
-                dados[2] = dados[2].replace("teamId: ", "");
-                int teamId = Integer.parseInt(dados[2]);
-                dados[3] = dados[3].replace("x: ", "");
-                int x = Integer.parseInt(dados[3]);
-                dados[4] = dados[4].replace("y: ", "");
-                int y = Integer.parseInt(dados[4]);
-                dados[5] = dados[5].replace("orientation: ", "");
-                String orientation = dados[5];
-                if(checkAdd(x,y,rows,columns,map)){
-                    addCreature(getEquipa(teamId),id,type,orientation,x,y);
+                    dados[2] = dados[2].replace("teamId: ", "");
+                    int teamId = Integer.parseInt(dados[2]);
+                    dados[3] = dados[3].replace("x: ", "");
+                    int x = Integer.parseInt(dados[3]);
+                    dados[4] = dados[4].replace("y: ", "");
+                    int y = Integer.parseInt(dados[4]);
+                    dados[5] = dados[5].replace("orientation: ", "");
+                    String orientation = dados[5];
+                    if(checkAdd(x,y,rows,columns,map)){
+                        addCreature(getEquipa(teamId),id,type,orientation,x,y);
+                    }
+                    if(getEquipa(teamId).getMoedas() < 0){
+                        if(teamId ==10 )
+                            userValid = false;
+                        else
+                            computerValid = false;
+                    }
                 }
             }
+        if(!userValid && !computerValid){
+            message = "Ambas as equipas não respeitam o plafond";
+            throw  new InsufficientCoinsException(user,computer,message);
+        }else if(!userValid && computerValid){
+            message = "O user não respeita o plafond ";
+            throw  new InsufficientCoinsException(user,computer,message);
+        }else if(userValid && !computerValid){
+            message = "O computer não respeita o plafond";
+            throw  new InsufficientCoinsException(user,computer,message);
         }
-
-
-        return validation();
     }
+
 
     public Equipa getEquipa(int teamId){
         if(teamId == 10){
@@ -410,11 +430,25 @@ public class FandeisiaGameManager {
         }
     }
 
+    public Map<String, List<String>> getStatistics(){
+        Map<String, List<String>> tmp = new HashMap<String,List<String>>();
+        tmp.put("as3MaisCarregadas",stats.as3MaisCarregadas(world));
+        tmp.put("as5MaisRicas",stats.as5MaisRicas(world));
+        tmp.put("osAlvosFavoritos",stats.osAlvosFavoritos(world));
+        tmp.put("as3MaisViajadas",stats.as3MaisViajadas(world));
+        tmp.put("tiposDeCriaturaESeusTesouros",stats.tiposDeCriaturaESeusTesouros(world));
+        tmp.put("viradosPara",stats.viradosPara(world));
+        tmp.put("asMaisEficientes",stats.asMaisEficientes(world));
+
+        return tmp;
+    }
+
     // - Metodos privados - //
-    private int validation(){
+    /*private int validation() throws InsufficientCoinsException{
+
         int valor;
         if(user.getMoedas()<0 && computer.getMoedas()<0){
-            valor=1;
+            throw new InsufficientCoinsException();
         }else if(user.getMoedas()<0 && computer.getMoedas()>=0){
             valor=2;
         }else if(user.getMoedas()>=0 && computer.getMoedas()<0){
@@ -423,7 +457,7 @@ public class FandeisiaGameManager {
             valor=0;
         }
         return valor;
-    }
+    }*/
 
     private boolean pointsWorld(){
         int sum=0;

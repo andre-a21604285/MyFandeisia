@@ -6,7 +6,7 @@ public class Druida extends Creature {
     public static final String IMAGE_PNG = "druida.png";//variavel static por ser final, o valor tipo não altera
     public static final String COST = "4";//variavel static por ser final, o valor tipo não altera
     private int movement;
-    private static final int INICIALMOVEMENT = 2;//variavel static por ser final, o valor tipo não altera
+    private static final int INICIALMOVEMENT = 1;//variavel static por ser final, o valor tipo não altera
     int custo;
     int x;
     int y;
@@ -18,9 +18,16 @@ public class Druida extends Creature {
         this.custo=2;
     }
 
-    public int getMovement() {return movement;}
+    public int getMovement() {
+        int mov = 1;
+        if(FandeisiaGameManager.turn%2 == 0)
+            mov=2;
+
+        return mov;
+    }
 
     public void movimento(){
+
         if(orientacao.equals("Norte")){
             y-=1;
         }else if(orientacao.equals("Sul")){
@@ -28,18 +35,6 @@ public class Druida extends Creature {
         }else if(orientacao.equals("Este")){
             x+=1;
         }else if(orientacao.equals("Oeste")){
-            x-=1;
-        }else if(orientacao.equals("Nordeste")) {
-            y -= 1;
-            x += 1;
-        }else if(orientacao.equals("Noroeste")){
-            y-=1;
-            x-=1;
-        }else if(orientacao.equals("Sudeste")){
-            y+=1;
-            x+=1;
-        }else if(orientacao.equals("Sudoeste")){
-            y+=1;
             x-=1;
         }
     }

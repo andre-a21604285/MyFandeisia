@@ -62,10 +62,14 @@ public class Equipa {
                             creatures.get(i).setOrientation();
                             break;
                         }
+                        if(isDruidaInPar(creatures.get(i))) {
+                            tresures.add(new Tresure("bronze",creatures.get(i).getX(),creatures.get(i).getY()));
+                        }
+                        creatures.get(i).incKm();
                         creatures.get(i).movimento();
                         for(int z=0;z<tresures.size();z++){
                             if(tresures.get(z).getX()==x && tresures.get(z).getY()==y){
-                                setPontos(tresures.get(z).getPoints());
+                                setPontos(tresures.get(z).getPoints(),creatures.get(i));
                                 tresures.remove(tresures.get(z));
                             }
                         }
@@ -73,10 +77,15 @@ public class Equipa {
                     }else if(!checkMovement(x,y,creatures.get(i),map)){
                         break;
                     }else{
+                        if(isDruidaInPar(creatures.get(i))) {
+                            tresures.add(new Tresure("bronze",creatures.get(i).getX(),creatures.get(i).getY()));
+                            map.addPosition(creatures.get(i).getX(), creatures.get(i).getY(), 'b');
+                        }
+                        creatures.get(i).incKm();
                         creatures.get(i).movimento();
                         for(int z=0;z<tresures.size();z++){
                             if(tresures.get(z).getX()==x && tresures.get(z).getY()==y){
-                                setPontos(tresures.get(z).getPoints());
+                                setPontos(tresures.get(z).getPoints(),creatures.get(i));
                                 tresures.remove(tresures.get(z));
                             }
                         }
@@ -85,6 +94,7 @@ public class Equipa {
                     creatures.get(i).setOrientation();
                     break;
                 }
+
             }
         }
         return tresures;
@@ -106,8 +116,9 @@ public class Equipa {
 
     public int getPontos(){return pontos;}
 
-    public void setPontos(int pontos){
+    public void setPontos(int pontos, Creature creature){
         this.pontos += pontos;
+        creature.incTreasures();
     }
 
     public int getSize(){return size;}
@@ -163,5 +174,12 @@ public class Equipa {
             isValid=true;
         }
         return isValid;
+    }
+
+    private boolean isDruidaInPar(Creature creature){
+        if(creature.getTipo().equals(Druida.TIPO)&&(creature.getX()+creature.getY())%2==0){
+            return true;
+        }
+        return false;
     }
 }

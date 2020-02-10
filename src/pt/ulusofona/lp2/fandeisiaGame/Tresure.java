@@ -9,6 +9,12 @@ public class Tresure{
 
     Tresure(){}
 
+    Tresure(String type, int x, int y){
+        this.x=x;
+        this.y=y;
+        setPoints(type);
+    }
+
     Tresure(int id,String type, int x, int y){
 
         this.id = id;
@@ -36,6 +42,7 @@ public class Tresure{
         }else if(type.equals("bronze")){
             pontos=1;
         }
+
     }
 
 }

@@ -12,6 +12,9 @@ public abstract class Creature {
     String tipo;
     String descricao;
     int nrPontos;
+    int nrSpells;
+    int nrTresures;
+    int km;
     String orientacao;
     int x;
     int y;
@@ -24,6 +27,7 @@ public abstract class Creature {
     Creature(){}
 
     Creature( int id, int idEquipa, String tipo, String imagePNG, String descricao,int x, int y, String orientacao){
+        this.nrTresures=0;
         this.nrPontos = 0;
         this.ouro = 0;
         this.prata = 0;
@@ -36,6 +40,8 @@ public abstract class Creature {
         this.orientacao = orientacao;
         this.x=x;
         this.y=y;
+        this.nrSpells = 0;
+        this.km=0;
     }
 
     public int getId(){return id;}
@@ -58,16 +64,6 @@ public abstract class Creature {
     public int getPrata(){return prata; }
     public int getBronze(){return bronze; }
 
-    public void setOuro(){
-        this.ouro++;
-    }
-    public void setPrata(){
-        this.prata++;
-    }
-    public void setBronze(){
-        this.bronze++;
-    }
-
     public String getOrientation(){return orientacao;}
     public abstract void setOrientation();
 
@@ -77,11 +73,27 @@ public abstract class Creature {
 
     public String getImagePNG(){return imagePNG;}
 
-    public void setNrPontos(int pontos){
-        this.nrPontos+=pontos;
+    public int getNrTreasure(){
+        return nrTresures;
+    }
+    public void incTreasures(){
+        nrTresures++;
     }
 
+    public int getNrSpells(){ return nrSpells;}
+    public void incNrSpells(){ nrSpells++;}
 
+    public int getKm(){
+        return km;
+    }
+
+    public void incKm(){
+        km++;
+    }
+
+    public double getRatio(){
+        return getNrTreasure() / getKm();
+    }
     public String toString(){return (id + " | " + tipo + " | " + idEquipa + " | " + nrPontos + " | @ " + x + " | " +
                 y);}
 
