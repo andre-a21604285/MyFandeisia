@@ -41,6 +41,10 @@ public class Equipa {
                 creatures.add( new Elfo(id,this.id,x,y,orientacao));
                 setMoedas(Integer.parseInt(Elfo.COST));
                 break;
+            case "Druida":
+                creatures.add( new Druida(id,this.id,x,y,orientacao));
+                setMoedas(Integer.parseInt(Druida.COST));
+                break;
         }
         size++;
 
@@ -86,12 +90,12 @@ public class Equipa {
         return tresures;
     }
 
-    public void setMoedas(int moedas){
-            this.moedas-=moedas;
-    }
-
     public int getMoedas(){
         return moedas;
+    }
+
+    public void setMoedas(int moedas){
+            this.moedas-=moedas;
     }
 
     public int getId(){return id;}

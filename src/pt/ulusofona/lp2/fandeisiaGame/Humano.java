@@ -14,7 +14,9 @@ public class Humano extends Creature {
         movement=INICIALMOVEMENT;
         this.custo=2;
     }
+
     public int getMovement() {return movement;}
+
     public void movimento(){
         if(orientacao.equals("Norte")){
             y-=1;
@@ -26,6 +28,7 @@ public class Humano extends Creature {
             x-=1;
         }
     }
+
     public void setOrientation(){
         if(orientacao.equals(normalOrientation.get(normalOrientation.size()-1))){
             orientacao = "Norte";
@@ -33,14 +36,18 @@ public class Humano extends Creature {
             orientacao = normalOrientation.get(normalOrientation.indexOf(orientacao)+1);
         }
     }
+
     public void setAlcance(int x){
         this.movement = x;
 
     }
+
     public void setAlcanceToNormal(){
         this.movement = INICIALMOVEMENT;
     }
+
     public int getCost(){
         return this.custo;
     }
+
 }

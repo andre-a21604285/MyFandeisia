@@ -51,6 +51,9 @@ public class FandeisiaGameManager {
             }else if(tipo.equals("Humano")){
                 map.addPosition(x,y,'h');
                 world.add(new Humano(id,equipa.getId(),x,y,orientacao));
+            }else if(tipo.equals("Druida")){
+                map.addPosition(x,y,'d');
+                world.add(new Druida(id,equipa.getId(),x,y,orientacao));
             }
         }
 
@@ -199,7 +202,7 @@ public class FandeisiaGameManager {
     }
 
     public String[][] getCreatureTypes() {
-        String[][] creatureTypes = new String[5][4];
+        String[][] creatureTypes = new String[6][4];
         creatureTypes[0][0] = Anao.TIPO;
         creatureTypes[0][1] = Anao.IMAGE_PNG;
         creatureTypes[0][2] = Anao.DESCRICAO;
@@ -224,6 +227,12 @@ public class FandeisiaGameManager {
         creatureTypes[4][1] = Gigante.IMAGE_PNG;
         creatureTypes[4][2] = Gigante.DESCRICAO;
         creatureTypes[4][3] = Gigante.COST;
+
+        creatureTypes[5][0] = Druida.TIPO;
+        creatureTypes[5][1] = Druida.IMAGE_PNG;
+        creatureTypes[5][2] = Druida.DESCRICAO;
+        creatureTypes[5][3] = Druida.COST;
+
         return creatureTypes;
     }
 
