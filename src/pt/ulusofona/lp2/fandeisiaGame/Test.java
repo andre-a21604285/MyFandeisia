@@ -5,9 +5,13 @@ import static org.junit.Assert.*;
 
 public class Test {
 
-    public void test(){
+    public void TestPosições(){
+        FandeisiaGameManager gameManager = new FandeisiaGameManager();
+        gameManager.getEquipa(10);
+        Equipa user= user = new Equipa(10);
+        Equipa computer= new Equipa(20);
+        assertEquals(user, gameManager.getEquipa(10));
 
     }
-
 
 }
